@@ -43,7 +43,6 @@ CREATE TABLE photos
 	isRemoved bit not null default 0,
 	totalLikes int not null default 0, --Might take away later
 	isVisible bit not null default 1,
-	isFavorited bit not null default 0, --Remember to figure out how to delete a photo that is favorited by other users
 
 	constraint fk_usersPhotos  foreign key (userId) References users(id),
 	constraint pk_photos primary key (id)
@@ -84,4 +83,15 @@ Create table captions
 	constraint pk_captions primary key (id)
 );
 
+create table favorites 
+(
+	id int identity(1,1),
+	photoId int not null,
+	userId int not null,
+	dateFavorited dateTime not null default current_TimeStamp,
+
+	constraint pk_favorites primary key (id),
+	constraint fk_photosFavorites  foreign key (photoId) References photos(id),
+	constraint fk_usersFavorites  foreign key (userId) References users(id),
+);
 COMMIT TRANSACTION;
