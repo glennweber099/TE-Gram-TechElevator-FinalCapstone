@@ -1,0 +1,470 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TeSnippets</name>
+    </assembly>
+    <members>
+        <member name="T:TeSnippets.Controllers.AccountController">
+            <summary>
+            Creates a new account controller used to authenticate the user.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Controllers.AccountController.#ctor(TeSnippets.Providers.Security.ITokenGenerator,TeSnippets.Providers.Security.IPasswordHasher,TeSnippets.DAL.IUserDAO)">
+            <summary>
+            Creates a new account controller.
+            </summary>
+            <param name="tokenGenerator">A token generator used when creating auth tokens.</param>
+            <param name="passwordHasher">A password hasher used when hashing passwords.</param>
+            <param name="userDao">A data access object to store user data.</param>
+        </member>
+        <member name="M:TeSnippets.Controllers.AccountController.Register(TeSnippets.Models.Account.AuthenticationModel)">
+            <summary>
+            Registers a user and provides a bearer token.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.AccountController.Login(TeSnippets.Models.Account.AuthenticationModel)">
+            <summary>
+            Authenticates the user and provides a bearer token.
+            </summary>
+            <param name="model">An object including the user's credentials.</param> 
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Controllers.SnippetController">
+            <summary>
+            Snippet Controller
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.#ctor(TeSnippets.DAL.IUserDAO,TeSnippets.DAL.ISnippetDAO,TeSnippets.Providers.Security.IPasswordHasher)">
+            <summary>
+            Creates a new snippet controller.
+            </summary>
+            <param name="userDao">A data access object to store user data.</param>
+            <param name="snippetDAO">A data access object to access snippet data.</param>
+            <param name="passwordHasher">A password hasher used when hashing passwords.</param>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.List">
+            <summary>
+            I will return a list of snippets based on the user that is logged in.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.GetSnippet(System.Int32)">
+            <summary>
+            I will get a snippet by it's id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.CreateSnippet(TeSnippets.Models.Snippet)">
+            <summary>
+            I will create a new snippet
+            </summary>
+            <param name="snippet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.Update(TeSnippets.Models.Snippet,System.Int32)">
+            <summary>
+            I will update a snippet
+            </summary>
+            <param name="snippet"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.SnippetController.Delete(System.Int32)">
+            <summary>
+            I will update a snippet by its id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Controllers.ValuesController">
+            <summary>
+            Values Controller
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Controllers.ValuesController.Get">
+            <summary>
+            Gets a collection of values. The requestor must be authenticated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Controllers.ValuesController.RequestToken">
+            <summary>
+            Gets a special message. The requestor must be a user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.DAL.ISnippetDAO">
+            <summary>
+            An interface for snippet dao objects.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.DAL.ISnippetDAO.FindById(System.Int32,System.Int32)">
+            <summary>
+            I will find a snippet by id.
+            </summary>
+            <param name="id">The snippet id.</param>
+            <param name="userid">The user's id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.ISnippetDAO.GetSnippets(System.Int32)">
+            <summary>
+            I will return a list of snippets for a given user
+            </summary>
+            <param name="userId">The user's id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.ISnippetDAO.CreateSnippet(TeSnippets.Models.Snippet)">
+            <summary>
+            I will save a new snippet.
+            </summary>
+            <param name="snippet">The snippet.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.ISnippetDAO.UpdateSnippet(TeSnippets.Models.Snippet)">
+            <summary>
+            I will update an exsiting snippet
+            </summary>
+            <param name="snippet"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.ISnippetDAO.DeleteSnippet(System.Int32,System.Int32)">
+            <summary>
+            I will delete a snippet by it's id.
+            </summary>
+            <param name="id"></param>
+            <param name="userid"></param>
+        </member>
+        <member name="T:TeSnippets.DAL.IUserDAO">
+            <summary>
+            An interface for user data objects.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.DAL.IUserDAO.GetUser(System.String)">
+            <summary>
+            Retrieves a user from the system by username.
+            </summary>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.IUserDAO.CreateUser(TeSnippets.Models.User)">
+            <summary>
+            Creates a new user.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.IUserDAO.UpdateUser(TeSnippets.Models.User)">
+            <summary>
+            Updates a user.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.IUserDAO.DeleteUser(TeSnippets.Models.User)">
+            <summary>
+            Deletes a user from the system.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="T:TeSnippets.DAL.SnippetSqlDAO">
+            <summary>
+            A SQL Dao for snippet objects.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.#ctor(System.String)">
+            <summary>
+            Creates a new sql dao for snippet objects.
+            </summary>
+            <param name="connectionString">the database connection string</param>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.FindById(System.Int32,System.Int32)">
+            <summary>
+            I will find a snippet by id.
+            </summary>
+            <param name="id"></param>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.GetSnippets(System.Int32)">
+            <summary>
+            I will return a list of snippets for a given user
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.CreateSnippet(TeSnippets.Models.Snippet)">
+            <summary>
+            I will save a new snippet.
+            </summary>
+            <param name="snippet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.UpdateSnippet(TeSnippets.Models.Snippet)">
+            <summary>
+            I will update an exsiting snippet
+            </summary>
+            <param name="snippet"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.SnippetSqlDAO.DeleteSnippet(System.Int32,System.Int32)">
+            <summary>
+            I will delete a snippet by it's id.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:TeSnippets.DAL.UserSqlDAO">
+            <summary>
+            A SQL Dao for user objects.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.DAL.UserSqlDAO.#ctor(System.String)">
+            <summary>
+            Creates a new sql dao for user objects.
+            </summary>
+            <param name="connectionString">the database connection string</param>
+        </member>
+        <member name="M:TeSnippets.DAL.UserSqlDAO.CreateUser(TeSnippets.Models.User)">
+            <summary>
+            Saves the user to the database.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.UserSqlDAO.DeleteUser(TeSnippets.Models.User)">
+            <summary>
+            Deletes the user from the database.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:TeSnippets.DAL.UserSqlDAO.GetUser(System.String)">
+            <summary>
+            Gets the user from the database.
+            </summary>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.DAL.UserSqlDAO.UpdateUser(TeSnippets.Models.User)">
+            <summary>
+            Updates the user in the database.
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="T:TeSnippets.Models.Account.AuthenticationModel">
+            <summary>
+            Represents an authentication model request.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Account.AuthenticationModel.Username">
+            <summary>
+            The user's username.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Account.AuthenticationModel.Password">
+            <summary>
+            The user's password.
+            </summary>
+        </member>
+        <member name="T:TeSnippets.Models.Snippet">
+            <summary>
+            Represents a Snippet in our snippet manager.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.Id">
+            <summary>
+            The snippet's id
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.Description">
+            <summary>
+            The description of the snippet.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.Filename">
+            <summary>
+            The filename of the snippet.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.SourceCode">
+            <summary>
+            The snippet's source code.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.Tags">
+            <summary>
+            The snippets tags.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.Snippet.UserId">
+            <summary>
+            The id of the user this snippet belongs to.
+            </summary>
+        </member>
+        <member name="T:TeSnippets.Models.User">
+            <summary>
+            Represents a user in the system.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.User.Id">
+            <summary>
+            The user's id.
+            </summary>        
+        </member>
+        <member name="P:TeSnippets.Models.User.Username">
+            <summary>
+            The user's username.
+            </summary>        
+        </member>
+        <member name="P:TeSnippets.Models.User.Password">
+            <summary>
+            The user's password.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.User.Salt">
+            <summary>
+            The user's salt.
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Models.User.Role">
+            <summary>
+            The user's role.
+            </summary>
+        </member>
+        <member name="T:TeSnippets.Program">
+            <summary>
+            The entry point for the api.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Program.Main(System.String[])">
+            <summary>
+            Entry point method for the api.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:TeSnippets.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Creates the web host to run the api.
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Providers.Security.IPasswordHasher">
+            <summary>
+            Represents a password hasher.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.IPasswordHasher.ComputeHash(System.String)">
+            <summary>
+            Given a clear text password, hash the password and return a Password Hash object.
+            </summary>
+            <param name="plainTextPassword">the password as given by the user.</param>
+            <returns>A hashed password object.</returns>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.IPasswordHasher.VerifyHashMatch(System.String,System.String,System.String)">
+            <summary>
+            Verifies a match of an existing hashed password against a user input.
+            </summary>
+            <param name="existingHashedPassword">The existing hashed password.</param>
+            <param name="plainTextPassword">The password as typed in by the user</param>
+            <param name="salt">The salt used to compute the original hash.</param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Providers.Security.ITokenGenerator">
+            <summary>
+            Represents an authentication token interface.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.ITokenGenerator.GenerateToken(System.String,System.String)">
+            <summary>
+            Generates a new authentication token.
+            </summary>
+            <param name="username">The user's username</param>
+            <param name="role">The user's role</param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Providers.Security.JwtGenerator">
+            <summary>
+            Represents a JWT generator.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.JwtGenerator.#ctor(System.String)">
+            <summary>
+            Creates a new JWT generator.
+            </summary>
+            <param name="secret">The app's secret to use when signing the token.</param>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.JwtGenerator.GenerateToken(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Providers.Security.PasswordHash">
+            <summary>
+            Represents a hashed password.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.PasswordHash.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new hashed password.
+            </summary>
+            <param name="password">The hashed password</param>
+            <param name="salt">The salt used to get the hashed password.</param>
+        </member>
+        <member name="P:TeSnippets.Providers.Security.PasswordHash.Password">
+            <summary>
+            The hashed password
+            </summary>
+        </member>
+        <member name="P:TeSnippets.Providers.Security.PasswordHash.Salt">
+            <summary>
+            The salt used to get the hashed password.
+            </summary>
+        </member>
+        <member name="T:TeSnippets.Providers.Security.PasswordHasher">
+            <summary>
+            The hash provider provides functionality to hash a plain text password and validate 
+            an existing password against its hash.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.PasswordHasher.ComputeHash(System.String)">
+            <summary>
+            Hashes a plain text password.
+            </summary>
+            <param name="plainTextPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TeSnippets.Providers.Security.PasswordHasher.VerifyHashMatch(System.String,System.String,System.String)">
+            <summary>
+            Verifies if an existing hashed password matches a plaintext password (+salt).
+            </summary>
+            <param name="existingHashedPassword">The password we are comparing to.</param>
+            <param name="plainTextPassword">The plaintext password being validated.</param>
+            <param name="salt">The salt used to get the existing hashed password.</param>
+            <returns></returns>
+        </member>
+        <member name="T:TeSnippets.Startup">
+            <summary>
+            The asp.net api startup class.
+            </summary>
+        </member>
+        <member name="M:TeSnippets.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Creates a startup class instance.
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:TeSnippets.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures all of the services used by the application.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:TeSnippets.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            Includes middleware configuration for the HTTP Request Pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

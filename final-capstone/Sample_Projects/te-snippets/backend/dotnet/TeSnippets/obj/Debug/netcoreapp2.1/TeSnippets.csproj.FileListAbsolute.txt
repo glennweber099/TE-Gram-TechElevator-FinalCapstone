@@ -1,0 +1,16 @@
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.deps.json
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.runtimeconfig.json
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.runtimeconfig.dev.json
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.dll
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.pdb
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\bin\Debug\netcoreapp2.1\TeSnippets.xml
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.csprojAssemblyReference.cache
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.csproj.CoreCompileInputs.cache
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.RazorAssemblyInfo.cache
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.RazorAssemblyInfo.cs
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.AssemblyInfoInputs.cache
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.AssemblyInfo.cs
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.RazorTargetAssemblyInfo.cache
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.dll
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.xml
+C:\Users\GWeber\git\c-final-capstone-te-gram-team-hat\final-capstone\Sample_Projects\te-snippets\backend\dotnet\TeSnippets\obj\Debug\netcoreapp2.1\TeSnippets.pdb
