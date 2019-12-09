@@ -43,8 +43,9 @@ CREATE TABLE photos
 	isRemoved bit not null default 0,
 	totalLikes int not null default 0, --Might take away later
 	isVisible bit not null default 1,
+	isFavorited bit not null default 0, --Remember to figure out how to delete a photo that is favorited by other users
 
-	constraint fk_users  foreign key (userId) References users(id),
+	constraint fk_usersPhotos  foreign key (userId) References users(id),
 	constraint pk_photos primary key (id)
 );
 
@@ -55,8 +56,8 @@ Create table likes
 	userId int not null,
 	dateLiked dateTime  not null default current_TimeStamp,
 
-	constraint fk_users  foreign key (userId) References users(id),
-	constraint fk_photos  foreign key (photoId) References photos(id),
+	constraint fk_usersLikes  foreign key (userId) References users(id),
+	constraint fk_photosLikes  foreign key (photoId) References photos(id),
 	constraint pk_likes primary key (id)
 );
 
@@ -67,8 +68,8 @@ Create table comments
 	userId int not null,
 	dateCommented dateTime not null default current_TimeStamp,
 
-	constraint fk_users  foreign key (userId) References users(id),
-	constraint fk_photos  foreign key (photoId) References photos(id),
+	constraint fk_usersComments  foreign key (userId) References users(id),
+	constraint fk_photosComments  foreign key (photoId) References photos(id),
 	constraint pk_comments primary key (id)
 );
 
@@ -79,19 +80,8 @@ Create table captions
 	dateCreated dateTime not null default current_TimeStamp,
 	isRemoved bit not null default 0,
 
-	constraint fk_photos  foreign key (photoId) References photos(id),
+	constraint fk_photosCaptions  foreign key (photoId) References photos(id),
 	constraint pk_captions primary key (id)
 );
 
-create table favorites 
-(
-	id int identity(1,1),
-    photoId int not null,
-	userId int not null,
-	isFavorited bit not null default 0, --Remember to figure out how to delete a photo that is favorited by other users
-	
-	constraint fk_users  foreign key (userId) References users(id),
-	constraint fk_photos  foreign key (photoId) References photos(id),
-	constraint pk_favorites primary key (id)	
-);
 COMMIT TRANSACTION;
