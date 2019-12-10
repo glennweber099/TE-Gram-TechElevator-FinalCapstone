@@ -37,7 +37,7 @@ CREATE TABLE users
 CREATE TABLE photos 
 (
     id int identity(1,1),
-	caption varchar(2200) null,
+	caption varchar(5000) null,
 	userId int not null,
     imageUrl varchar(500) not null, 
 	dateAdded dateTime  not null default current_TimeStamp,

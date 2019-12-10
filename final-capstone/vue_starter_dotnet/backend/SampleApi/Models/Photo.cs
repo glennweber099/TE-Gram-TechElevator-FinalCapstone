@@ -29,7 +29,7 @@ namespace SampleApi.Models
         /// <summary>
         /// the url of the photo
         /// </summary>
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// when the photo was uploaded

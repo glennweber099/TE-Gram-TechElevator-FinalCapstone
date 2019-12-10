@@ -33,12 +33,11 @@ namespace SampleApi.DAL
                 using(SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-
-                    SqlCommand command = new SqlCommand(@"insert into photos(caption, userId, imgUrl) VALUES(@caption, @userId, @imgUrl)", conn);
+                    int userId = photo.UserId;
+                    SqlCommand command = new SqlCommand("insert into photos(caption, userId, imageUrl) VALUES(@caption, @userId, @imageUrl)", conn);
                     command.Parameters.AddWithValue("@caption", photo.Caption);
                     command.Parameters.AddWithValue("@userId", photo.UserId);
-                    command.Parameters.AddWithValue("@imgUrl", photo.ImgUrl);
-
+                    command.Parameters.AddWithValue("@imageUrl", photo.ImageUrl);
                     command.ExecuteNonQuery();
                 }
             }
@@ -59,7 +58,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand command = new SqlCommand(@"UPDATE photos SET isVisible = 0 WHERE id = @id", conn);
+                    SqlCommand command = new SqlCommand("UPDATE photos SET isVisible = 0 WHERE id = @id", conn);
                     command.Parameters.AddWithValue("@id", photo.Id);
 
                     command.ExecuteNonQuery();
