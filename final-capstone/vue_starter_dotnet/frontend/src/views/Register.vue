@@ -32,6 +32,16 @@
         v-model="user.confirmPassword"
         required
       />
+      <label for="email" class="sr-only">Email</label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        placeholder="Email"
+        v-model="user.email"
+        required
+        autofocus
+      />
       <router-link :to="{ name: 'login' }">
         Have an account?
       </router-link>
@@ -48,6 +58,7 @@ export default {
   data() {
     return {
       user: {
+        email: '',
         username: '',
         password: '',
         confirmPassword: '',
