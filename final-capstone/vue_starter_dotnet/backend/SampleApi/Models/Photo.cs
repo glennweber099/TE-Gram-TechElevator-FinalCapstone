@@ -15,22 +15,27 @@ namespace SampleApi.Models
         /// the photo's id
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// the photo's caption
         /// </summary>
         public string Caption { get; set; }
+
         /// <summary>
         /// the id of the user who uploaded the photo
         /// </summary>
         public int UserId { get; set; }
+
         /// <summary>
         /// the url of the photo
         /// </summary>
         public string ImgUrl { get; set; }
+
         /// <summary>
         /// when the photo was uploaded
         /// </summary>
         public DateTime DateAdded { get; set; }
+
         /// <summary>
         /// tells us if the photo is visible (and it won't be if it was "deleted")
         /// </summary>
