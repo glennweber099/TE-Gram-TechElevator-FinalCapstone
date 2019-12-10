@@ -37,11 +37,11 @@ CREATE TABLE users
 CREATE TABLE photos 
 (
     id int identity(1,1),
+	caption varchar(2200) null,
 	userId int not null,
     imageUrl varchar(500) not null, 
 	dateAdded dateTime  not null default current_TimeStamp,
 	isRemoved bit not null default 0,
-	totalLikes int not null default 0, --Might take away later
 	isVisible bit not null default 1,
 
 	constraint fk_usersPhotos  foreign key (userId) References users(id),
@@ -70,17 +70,6 @@ Create table comments
 	constraint fk_usersComments  foreign key (userId) References users(id),
 	constraint fk_photosComments  foreign key (photoId) References photos(id),
 	constraint pk_comments primary key (id)
-);
-
-Create table captions 
-(
-	id int identity(1,1),
-	photoId int not null,
-	dateCreated dateTime not null default current_TimeStamp,
-	isRemoved bit not null default 0,
-
-	constraint fk_photosCaptions  foreign key (photoId) References photos(id),
-	constraint pk_captions primary key (id)
 );
 
 create table favorites 
