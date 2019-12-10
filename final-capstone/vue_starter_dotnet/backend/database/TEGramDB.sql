@@ -41,7 +41,6 @@ CREATE TABLE photos
 	userId int not null,
     imageUrl varchar(500) not null, 
 	dateAdded dateTime  not null default current_TimeStamp,
-	isRemoved bit not null default 0,
 	isVisible bit not null default 1,
 
 	constraint fk_usersPhotos  foreign key (userId) References users(id),
@@ -62,6 +61,7 @@ Create table likes
 
 Create table comments 
 (
+	comment varchar(2200) not null,
 	id int identity(1,1),
 	photoId int not null,
 	userId int not null,
