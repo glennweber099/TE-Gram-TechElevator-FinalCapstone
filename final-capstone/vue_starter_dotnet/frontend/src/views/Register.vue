@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     register() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/api/account/register`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/account/register`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
