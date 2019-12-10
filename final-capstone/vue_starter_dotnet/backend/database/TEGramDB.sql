@@ -25,9 +25,9 @@ CREATE TABLE users
 	isDeactivated  bit       not null default 0,
 	dateJoined     dateTime  not null default current_TimeStamp,
 	username	   varchar(50)	not null,
-	email varchar(50) not null,
+	email          varchar(50),
 	password	varchar(50)	not null,
-	profileImage varchar(500) not null,
+	profileImage varchar(1500),
 	salt		varchar(50)	not null,
 	role		varchar(50)	default('user'),
 
