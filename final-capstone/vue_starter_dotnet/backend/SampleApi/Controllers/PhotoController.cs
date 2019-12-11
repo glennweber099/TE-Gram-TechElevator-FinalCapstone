@@ -18,6 +18,12 @@ namespace SampleApi.Controllers
         private IPhotoDAO photoDAO;
         private IUserDAO userDAO;
 
+        /// <summary>
+        /// 
+        /// Takes in the 2 DAOs to use in the Controller
+        /// </summary>
+        /// <param name="dao"></param>
+        /// <param name="udao"></param>
         public PhotoController(IPhotoDAO dao, IUserDAO udao)
         {
             this.photoDAO = dao;

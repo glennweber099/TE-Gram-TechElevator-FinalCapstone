@@ -1,76 +1,106 @@
 <template>
-  <div id="upload" class="text-center">
-    <form class="image-upload">
-      <h1 class="h3 mb-3 font-weight-normal">Upload Image</h1>
-      <div class="alert alert-danger" role="alert" v-if="registrationErrors">
-        There were problems uploading this image. Please try again.
-      </div>
-      <p>
-      <label for="imageUrl" class="sr-only">Image Url</label>
+  <div id="new-post" class="container">
+    <h2>Upload a photo to share</h2>
+    <form id="post-form" v-on:submit.prevent="sharePhoto">
+      <vue-dropzone
+        id="dropzone"
+        v-bind:options="dropzoneOptions"
+        v-on:vdropzone-sending="addFormData"
+        v-on:vdropzone-success="getSuccess"
+      ></vue-dropzone>
       <input
         type="text"
-        id="imageUrl"
-        class="form-control"
-        placeholder=" Image Url"
-        v-model="image.imageUrl"
-        required
-        autofocus
-      />
-      </p>
-      <p>
-      <label for="caption" class="sr-only">Caption</label>
-      <input
-        type="text"
+        name="caption"
         id="caption"
-        class="form-control"
-        placeholder=" "
-        v-model="image.caption"
-        required
+        v-model="post.caption"
+        autocomplete="off"
+        placeholder="Add a caption..."
       />
-      </p>
-      <p>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Post Image
-      </button>
-      </p>
+      <div class="form-actions">
+        <button v-bind:disabled="!canPost" id="share">Share</button>
+        <router-link to="/" tag="button">Cancel</router-link>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import auth from "../auth.js";
+
 export default {
-  name: 'upload',
+  name: "new-post",
+  components: {
+    vueDropzone: vue2Dropzone
+  },
   data() {
     return {
-      image: {
-        imageUrl: '',
-        caption: '',
+      dropzoneOptions: {
+        // tutorials
+        // https://danhough.com/blog/dropzone-cloudinary/ 
+        // https://alligator.io/vuejs/vue-dropzone/
+        url: "https://api.cloudinary.com/v1_1/tech-elevator/image/upload",  //this is my url for cloudinary
+        thumbnailWidth: 250,
+        maxFilesize: 2.0,
+        acceptedFiles: ".jpg, .jpeg, .png, .gif",
+        uploadMultipe: false
       },
-      registrationErrors: false,
+      post: {
+        imageUrl: "",
+        caption: ""
+      }
     };
   },
+  computed: {
+    canPost() {
+      return this.post.imageUrl;
+    }
+  },
   methods: {
-    upload() {
+    /**
+     * Called before sending the request to add additional headers.
+     * @function
+     */
+    addFormData(file, xhr, formData) {
+      formData.append("api_key", "714725446462368");  // my api key
+      formData.append("upload_preset", "vg8sew4g"); // my upload preset
+      formData.append("timestamp", (Date.now() / 1000) | 0);
+      formData.append("tags", "vue-app");
+    },
+    /**
+     * Called after an upload success to get the image url.
+     * @function
+     */
+    getSuccess(file, response) {
+      this.post.imageUrl = response.secure_url;
+    },
+    /**
+     * POSTs a new Post
+     * @function
+     */
+    sharePhoto() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/photo/upload`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + auth.getToken(),
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(this.image),
+        body: JSON.stringify(this.post)
       })
-        .then((response) => {
+        .then(response => {
           if (response.ok) {
-            this.$router.push({ path: '/upload'});
-          } else {
-            this.registrationErrors = true;
+            this.$router.push("/");
           }
         })
-        .then((err) => console.error(err));
-    },
-  },
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+
 </style>
