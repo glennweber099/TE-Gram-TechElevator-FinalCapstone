@@ -5,6 +5,7 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems registering this user.
       </div>
+      <p>
       <label for="username" class="sr-only">Username</label>
       <input
         type="text"
@@ -15,6 +16,8 @@
         required
         autofocus
       />
+      </p>
+      <p>
       <label for="password" class="sr-only">Password</label>
       <input
         type="password"
@@ -24,6 +27,9 @@
         v-model="user.password"
         required
       />
+      </p>
+      <p>
+      <label for="confirmPassword" class="sr-only">Confirm Password</label>
       <input
         type="password"
         id="confirmPassword"
@@ -32,6 +38,8 @@
         v-model="user.confirmPassword"
         required
       />
+      </p>
+      <p>
       <label for="email" class="sr-only">Email</label>
       <input
         type="text"
@@ -42,12 +50,17 @@
         required
         autofocus
       />
+      </p>
+      <p>
       <router-link :to="{ name: 'login' }">
         Have an account?
       </router-link>
+      </p>
+      <p>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
+      </p>
     </form>
   </div>
 </template>

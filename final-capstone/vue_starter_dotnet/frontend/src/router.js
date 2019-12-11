@@ -4,6 +4,7 @@ import auth from './auth'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
+import Upload from './views/Upload.vue'
 
 Vue.use(Router)
 
@@ -42,6 +43,14 @@ const router = new Router({
       component: Register,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/upload",
+      name: "upload",
+      component: Upload,
+      meta: {
+        requiresAuth: true
       }
     },
   ]
