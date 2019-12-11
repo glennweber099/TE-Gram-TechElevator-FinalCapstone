@@ -19,9 +19,7 @@
   bottom:0px;
   right: 0px;
   overflow: auto;
-  background: linear-gradient(blue, white)
-}
-#body { 
+  background: linear-gradient(rgb(46, 46, 165), white)
 }
  #logosignin img {
     width: 250px;

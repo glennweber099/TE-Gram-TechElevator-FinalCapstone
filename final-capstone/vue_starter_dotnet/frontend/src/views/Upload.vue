@@ -1,6 +1,6 @@
 <template>
   <div id="upload" class="text-center">
-    <form class="image-upload" @submit.prevent="upload">
+    <form class="image-upload">
       <h1 class="h3 mb-3 font-weight-normal">Upload Image</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems uploading this image. Please try again.
@@ -61,12 +61,11 @@ export default {
       })
         .then((response) => {
           if (response.ok) {
-            this.$router.push({ path: '/upload', query: { registration: 'success' } });
+            this.$router.push({ path: '/upload'});
           } else {
             this.registrationErrors = true;
           }
         })
-
         .then((err) => console.error(err));
     },
   },
