@@ -83,6 +83,7 @@ namespace SampleApi
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
             services.AddTransient<IUserDAO>(m => new UserSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IPhotoDAO>(m => new PhotoSQLDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<ILikeDAO>(m => new LikeSqlDAO(Configuration.GetConnectionString("Default")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
