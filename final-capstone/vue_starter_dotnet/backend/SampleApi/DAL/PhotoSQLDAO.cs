@@ -75,18 +75,40 @@ namespace SampleApi.DAL
         /// <returns></returns>
         public List<Photo> GetPhotosByRecent()
         {
-            return null;
-        }
-        /// <summary>
-        /// returns a list of all photos that have been uploaded by a given user
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public List<Photo> GetPhotosByUser(int userId)
-        {
-            return null;
-        }
+            List<Photo> output = new List<Photo>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
+                    SqlCommand cmd = new SqlCommand("SELECT* FROM photos ORDER BY dateAdded DESC; ", conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        {
+                            Photo photo = new Photo();
+
+                            photo.Id = (Convert.ToInt32(reader["id"]));
+                            photo.Caption = (Convert.ToString(reader["caption"]));
+                            photo.UserId = (Convert.ToInt32(reader["userId"]));
+                            photo.ImageUrl = (Convert.ToString(reader["imageUrl"]));
+                            photo.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
+                            photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+                            output.Add(photo);
+                        };
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return output;
+        }
+        
         // TBD if we want to show a photo detail page that scrolls when a single photo is selected OR just the photo that was selected
         public Photo GetPhoto(int photoId)
         {

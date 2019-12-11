@@ -28,9 +28,30 @@ namespace SampleApi.Controllers
         /// Displays all photos sorted by upload date to home page
         /// </summary>
         /// <returns></returns>
+        [HttpGet("index")]
         public IActionResult Index()
         {
-            return View();
+            List<Photo> photos = photoDAO.GetPhotosByRecent();
+            return Ok();
+        }
+        /// <summary>
+        /// Displays all photos that have been uploaded by a given user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("user-photos")]
+        public IActionResult GetPhotosByUser(int userId)
+        {
+            List<Photo> photos = photoDAO.GetPhotosByRecent();
+            List<Photo> filteredPhotos = new List<Photo>();
+            foreach(Photo photo in photos)
+            {
+                if (photo.UserId == userId)
+                {
+                    filteredPhotos.Add(photo);
+                }
+            }
+            return Ok();
         }
 
         /// <summary>

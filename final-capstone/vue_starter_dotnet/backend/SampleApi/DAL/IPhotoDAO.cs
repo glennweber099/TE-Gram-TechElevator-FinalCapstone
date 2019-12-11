@@ -10,5 +10,7 @@ namespace SampleApi.DAL
     {
         void UploadPhoto(Photo photo);
         void DeletePhoto(Photo photo);
+        List<Photo> GetPhotosByRecent();
+        Photo GetPhoto(int photoId);
     }
 }
