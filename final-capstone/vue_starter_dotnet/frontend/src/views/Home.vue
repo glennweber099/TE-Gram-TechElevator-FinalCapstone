@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <h1>Home</h1>
+    <div class="images" >
+     <p><img src=""></p>
+      <p></p>
     <p>Images with the option to like/favorite them will appear here. If you are not logged in, this will just show images without the option to like/favorite them</p>
     <p><router-link :to="{ name: 'upload' }">Upload a Photo</router-link></p>
     <p><button v-on:click="logout">Click to Logout</button></p>
