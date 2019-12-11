@@ -1,7 +1,7 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Hello and Welcome to TE-Gram</h1>
+      <h1 class="h3 mb-3 font-weight-normal" style="font-family: 'Pacifico', cursive; font-size: 3em;">Welcome to TE-Gram</h1>
       <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
        <strong> Invalid username and password! </strong>
       </div>
@@ -9,7 +9,7 @@
         <strong> Thank you for registering, please sign in. </strong>
       </div>
           <p>
-            <label for="username" class="sr-only"><strong>Username</strong></label>
+            <label for="username" class="sr-only" style="font-family: 'Girassol', cursive; font-size: 1.5em; margin-right: 5px;"><strong>Username:  </strong></label>
           <input
             type="text"
             id="username"
@@ -21,7 +21,7 @@
           />
           </p>
           <p>
-          <label for="password" class="sr-only"><strong>Password</strong></label>
+          <label for="password" class="sr-only" style="font-family: 'Girassol', cursive; font-size: 1.5em; margin-right: 5px;"><strong>Password:  </strong></label>
           <input
             type="password"
             id="password"
@@ -32,7 +32,7 @@
           />
           </p>
           <p>
-          <router-link :to="{ name: 'register' }"><strong>Need to Sign Up?</strong></router-link>
+          <router-link :to="{ name: 'register' }" style="font-family: 'Girassol', cursive;"><strong>Create a New Account</strong></router-link>
           </p>
           <p>
           <button type="submit"><strong>Sign in</strong></button>
@@ -89,5 +89,6 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico&display=swap');
 
 </style>
