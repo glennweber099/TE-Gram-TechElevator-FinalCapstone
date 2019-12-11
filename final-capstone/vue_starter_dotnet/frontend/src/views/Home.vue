@@ -6,7 +6,7 @@
     <p><router-link :to="{ name: 'login' }">Log Out</router-link></p>
     <!-- This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
-    replacing the token then logs them out and logs in the user that just logged in
+    replacing the token makes it associated with the user's credidentals that just typed them in
     Not entirely sure if this works but it seems like it does. 
     It will be easier to test once we can get the uploading images to work since we can see which user submitted the images.
     Since it does not fully log out the user in theory

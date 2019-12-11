@@ -39,7 +39,7 @@ CREATE TABLE photos
     id int identity(1,1),
 	caption varchar(5000) null,
 	userId int not null,
-    imageUrl varchar(500) not null, 
+    imageUrl varchar(5000) not null, 
 	dateAdded dateTime  not null default current_TimeStamp,
 	isVisible bit not null default 1,
 
