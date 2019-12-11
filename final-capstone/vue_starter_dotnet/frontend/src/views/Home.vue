@@ -4,7 +4,7 @@
     <p>Images with the option to like/favorite them will appear here. If you are not logged in, this will just show images without the option to like/favorite them</p>
     <p><router-link :to="{ name: 'upload' }">Upload a Photo</router-link></p>
     <p><button v-on:click="logout">Click to Logout</button></p>
-    <!-- This link (^) goes back to the log in screen
+    <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
     replacing the token makes it associated with the user's credidentals that just typed them in
     Not entirely sure if this works but it seems like it does. 
@@ -23,8 +23,7 @@ export default {
   methods: {
     logout : function(token) {
       auth.destroyToken(token);
-      alert('You have succesfully logged out')
-      this.$router.push('/account/login')
+      this.$router.push('/login')
     }
   }
 }
