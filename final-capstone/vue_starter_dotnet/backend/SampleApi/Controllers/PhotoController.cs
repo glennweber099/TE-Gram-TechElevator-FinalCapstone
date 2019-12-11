@@ -38,7 +38,7 @@ namespace SampleApi.Controllers
         public IActionResult Index()
         {
             List<Photo> photos = photoDAO.GetPhotosByRecent();
-            return Ok();
+            return Ok(photos);
         }
         /// <summary>
         /// Displays all photos that have been uploaded by a given user
