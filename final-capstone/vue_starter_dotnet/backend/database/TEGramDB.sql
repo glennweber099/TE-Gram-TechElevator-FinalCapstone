@@ -84,3 +84,5 @@ create table favorites
 	constraint fk_usersFavorites  foreign key (userId) References users(id),
 );
 COMMIT TRANSACTION;
+
+select * from comments
