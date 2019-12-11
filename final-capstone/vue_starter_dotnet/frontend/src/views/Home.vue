@@ -1,10 +1,11 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <div class="images" >
-     <p><img src=""></p>
-      <p></p>
-    <p>Images with the option to like/favorite them will appear here. If you are not logged in, this will just show images without the option to like/favorite them</p>
+    <div class="images" v-for="photo in photos" v-bind:key="photo.id">
+      <h2>{{photo.photoOwner}}</h2>
+     <img v-bind:src="photo.imageUrl">
+      <h2>{{photo.caption}}</h2>
+    </div>
     <p><router-link :to="{ name: 'upload' }">Upload a Photo</router-link></p>
     <p><button v-on:click="logout">Click to Logout</button></p>
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
@@ -27,7 +28,91 @@ export default {
     logout : function(token) {
       auth.destroyToken(token);
       this.$router.push('/login')
+    },
+    timeAgo : function(selector) {
+
+    var templates = {
+        prefix: "",
+        suffix: " ago",
+        seconds: "less than a minute",
+        minute: "about a minute",
+        minutes: "%d minutes",
+        hour: "about an hour",
+        hours: "about %d hours",
+        day: "a day",
+        days: "%d days",
+        month: "about a month",
+        months: "%d months",
+        year: "about a year",
+        years: "%d years"
+    };
+    var template = function(t, n) {
+        return templates[t] && templates[t].replace(/%d/i, Math.abs(Math.round(n)));
+    };
+
+    var timer = function(time) {
+        if (!time)
+            return;
+        time = time.replace(/\.\d+/, ""); // remove milliseconds
+        time = time.replace(/-/, "/").replace(/-/, "/");
+        time = time.replace(/T/, " ").replace(/Z/, " UTC");
+        time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2"); // -04:00 -> -0400
+        time = new Date(time * 1000 || time);
+
+        var now = new Date();
+        var seconds = ((now.getTime() - time) * .001) >> 0;
+        var minutes = seconds / 60;
+        var hours = minutes / 60;
+        var days = hours / 24;
+        var years = days / 365;
+
+        return templates.prefix + (
+                seconds < 45 && template('seconds', seconds) ||
+                seconds < 90 && template('minute', 1) ||
+                minutes < 45 && template('minutes', minutes) ||
+                minutes < 90 && template('hour', 1) ||
+                hours < 24 && template('hours', hours) ||
+                hours < 42 && template('day', 1) ||
+                days < 30 && template('days', days) ||
+                days < 45 && template('month', 1) ||
+                days < 365 && template('months', days / 30) ||
+                years < 1.5 && template('year', 1) ||
+                template('years', years)
+                ) + templates.suffix;
+    };
+
+    var elements = document.getElementsByClassName('timeago');
+    for (var i in elements) {
+        var $this = elements[i];
+        if (typeof $this === 'object') {
+            $this.innerHTML = timer($this.getAttribute('title') || $this.getAttribute('datetime'));
+        }
     }
+    // update time every minute
+    setTimeout(timeAgo, 60000);
+
+    }
+  },
+  data() {
+    return {
+      photos: [],
+    }
+  },
+  created(){
+    fetch(`${process.env.VUE_APP_REMOTE_API}/photo`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + auth.getToken()
+        }})
+        .then(response => {
+          return response.json();
+        })
+        .then(json => {
+          console.log(json);
+          this.photos = json;
+        });
   }
 }
 </script>

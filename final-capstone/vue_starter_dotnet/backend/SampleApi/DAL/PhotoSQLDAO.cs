@@ -82,7 +82,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT* FROM photos ORDER BY dateAdded DESC; ", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id where isVisible = 1 ORDER BY dateAdded DESC ", conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -90,7 +90,8 @@ namespace SampleApi.DAL
                         {
                             Photo photo = new Photo();
 
-                            photo.Id = (Convert.ToInt32(reader["id"]));
+                            photo.photoOwner = Convert.ToString(reader["username"]);
+                            photo.Id = (Convert.ToInt32(reader["photoId"]));
                             photo.Caption = (Convert.ToString(reader["caption"]));
                             photo.UserId = (Convert.ToInt32(reader["userId"]));
                             photo.ImageUrl = (Convert.ToString(reader["imageUrl"]));

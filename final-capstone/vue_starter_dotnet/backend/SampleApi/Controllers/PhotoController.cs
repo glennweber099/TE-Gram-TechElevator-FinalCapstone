@@ -34,7 +34,7 @@ namespace SampleApi.Controllers
         /// Displays all photos sorted by upload date to home page
         /// </summary>
         /// <returns></returns>
-        [HttpGet("index")]
+        [HttpGet]
         public IActionResult Index()
         {
             List<Photo> photos = photoDAO.GetPhotosByRecent();
