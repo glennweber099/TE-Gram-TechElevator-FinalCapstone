@@ -3,7 +3,7 @@
   <div id="logosignin" class="col-md-4" >
     <!-- <div id="nav" class="row-fluid text-center">
           <li id="eventlink"><router-link to="/">Home</router-link></li>  
-          <!-- This link (^) will show just images without the ability to like or favorite them when a user is not logged in
+          This link (^) will show just images without the ability to like or favorite them when a user is not logged in
           <li id="eventlink"><router-link to="/">Log-In</router-link></li>
           <li id="eventlink"><router-link to="/register">Register</router-link></li>
     </div> -->

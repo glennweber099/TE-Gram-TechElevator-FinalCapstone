@@ -18,7 +18,7 @@
       />
       <div class="form-actions">
         <button v-bind:disabled="!canPost" id="share">Share</button>
-        <router-link to="/" tag="button">Cancel</router-link>
+        <router-link to="/" tag="button">Go Back</router-link>
       </div>
     </form>
   </div>
