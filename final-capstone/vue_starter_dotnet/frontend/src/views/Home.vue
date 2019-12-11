@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import auth from '../auth';
+import auth from '../auth';
 export default {
   name: 'home',
   methods: {
