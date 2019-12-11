@@ -31,7 +31,12 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<Photo> GetPhotosByUser(int userId);
-        Photo GetPhoto(int photoId);
+        //List<Photo> GetPhotosByUser(int userId);
+        /// <summary>
+        /// Queries the database and retrieves a photo that matches the given photo Id
+        /// </summary>
+        /// <param name="photoId"></param>
+        /// <returns></returns>
+        //Photo GetPhoto(int photoId);
     }
 }
