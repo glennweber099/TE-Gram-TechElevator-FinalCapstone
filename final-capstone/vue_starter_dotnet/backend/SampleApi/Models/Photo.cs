@@ -40,10 +40,5 @@ namespace SampleApi.Models
         /// tells us if the photo is visible (and it won't be if it was "deleted")
         /// </summary>
         public bool IsVisible { get; set; }
-
-        /// <summary>
-        /// Username of the owner of the photo
-        /// </summary>
-        public string PhotoOwner { get; set; }
     }
 }

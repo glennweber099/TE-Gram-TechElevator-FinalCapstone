@@ -26,6 +26,11 @@ namespace SampleApi.DAL
         /// </summary>
         /// <returns></returns>
         List<Photo> GetPhotosByRecent();
+
+        /// <summary>
+        /// Get all photo details by Id
+        /// </summary>
+        DeepPhoto GetDeepPhotoById(int id);
         /// <summary>
         /// Queries the database and retrieves all photos that have been uploaded by the given user
         /// </summary>

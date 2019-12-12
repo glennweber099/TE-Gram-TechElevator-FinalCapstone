@@ -91,5 +91,12 @@ namespace SampleApi.Controllers
             photoDAO.DeletePhoto(photo);
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetPhotoById(int id)
+        {
+            DeepPhoto photo = photoDAO.GetDeepPhotoById(id);
+            return Ok(photo);
+        }
     }
 }
