@@ -35,7 +35,8 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM comments ORDER BY dateAdded DESC ", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM comments WHERE photoId = @photoId ORDER BY dateAdded DESC ", conn);
+                    cmd.Parameters.AddWithValue("@photoId", photoId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -73,7 +74,8 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM comments ORDER BY dateAdded DESC ", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM comments WHERE photoId = @photoId ORDER BY dateAdded DESC ", conn);
+                    cmd.Parameters.AddWithValue("@photoId", photoId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
