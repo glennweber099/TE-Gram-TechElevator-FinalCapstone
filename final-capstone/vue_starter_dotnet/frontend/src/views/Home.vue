@@ -109,9 +109,10 @@ export default {
 
 .item {
   padding: 50px;
-  margin: 25px;
-  background-color: white;
+  margin: 15px;
+  background-color:rgba(255, 255, 255, 0.7);
   width: 750px;
+  border-radius: 10px;
 } 
 
 .item > img {

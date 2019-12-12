@@ -112,9 +112,32 @@ export default {
 
 #share {
   font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1.2em;
+  margin-top: 10px;
+  width: 100px;
 }
 
 #go-back {
-    font-family: 'Archivo Narrow', sans-serif;
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1.2em;
+  margin-top: 10px;
+  width: 100px;
+}
+
+#post-form {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#dropzone {
+  width: 75%;
+  margin: auto;
+}
+
+#caption {
+  width: 50%;
+  height: 50px;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>
