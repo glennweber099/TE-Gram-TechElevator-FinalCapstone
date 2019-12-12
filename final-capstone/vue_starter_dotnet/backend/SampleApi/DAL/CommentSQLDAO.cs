@@ -110,7 +110,7 @@ namespace SampleApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId, dateCommented) Values(@comment, @photoId, @commenterId, @dateCommented)", conn);
+                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId)", conn);
                     command.Parameters.AddWithValue("@comment", comment.CommentString);
                     command.Parameters.AddWithValue("@photoId", comment.PhotoId);
                     command.Parameters.AddWithValue("@commenterId", comment.CommenterId);

@@ -110,6 +110,56 @@ namespace SampleApi.DAL
             return output;
         }
 
+        /// <summary>
+        /// This gets a photo with a given ID as well as data about the user that submitted the photo, and all comments and likes associated with that photo
+        /// </summary>
+        /// <param name="photo"></param>
+        /// <returns></returns>
+        public DeepPhoto GetDeepPhotoById(Photo photo)
+        {
+            DeepPhoto deepPhoto = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("select * from photos where photoId = @id select * from comments where photoId = @id select * from likes where photoId = @id", conn);
+                    cmd.Parameters.AddWithValue("@id", photo.Id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        {
+                            DeepPhoto newPhoto = new DeepPhoto();
+                            List<Comment> comments = new List<Comment>();
+                            List<Like> likes = new List<Like>();
+
+                            newPhoto.photoOwner = Convert.ToString(reader["username"]);
+                            newPhoto.Id = (Convert.ToInt32(reader["photoId"]));
+                            newPhoto.Caption = (Convert.ToString(reader["caption"]));
+                            newPhoto.UserId = (Convert.ToInt32(reader["userId"]));
+                            newPhoto.ImageUrl = (Convert.ToString(reader["imageUrl"]));
+                            newPhoto.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
+                            newPhoto.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+
+                            
+
+                            deepPhoto = newPhoto;
+
+                            
+                        };
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return topComment;
+        }
+
         //public List<Photo> GetPhotosByUser(int userId)
         //{
         //    return null;
