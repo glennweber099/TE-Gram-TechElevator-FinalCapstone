@@ -123,7 +123,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("select * from photos where Id = @id select * from comments where photoId = @id select * from likes where photoId = @id", conn);
+                    SqlCommand cmd = new SqlCommand("select * from photos where Id = @id select * from comments where photoId = @id select count(*) as 'Total Likes' from likes where likes.photoId = @id", conn);
                     cmd.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -170,13 +170,7 @@ namespace SampleApi.DAL
                     {
                         while (reader.Read())
                         {
-                            Like like = new Like();
-                            {
-                                like.Id = (Convert.ToInt32(reader["id"]));
-                                like.UserId = (Convert.ToInt32(reader["userId"]));
-                                like.PhotoId = (Convert.ToInt32(reader["photoId"]));
-                            };
-                            deepPhoto.AllLikes.Add(like);
+                                deepPhoto.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
                         }
                     }
                 }
