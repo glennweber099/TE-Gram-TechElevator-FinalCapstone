@@ -44,6 +44,6 @@ namespace SampleApi.Models
         /// <summary>
         /// Username of the owner of the photo
         /// </summary>
-        public string photoOwner { get; set; }
+        public string PhotoOwner { get; set; }
     }
 }

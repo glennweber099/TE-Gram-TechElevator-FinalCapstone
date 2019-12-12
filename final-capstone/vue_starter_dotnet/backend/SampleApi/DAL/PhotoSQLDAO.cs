@@ -90,7 +90,7 @@ namespace SampleApi.DAL
                         {
                             Photo photo = new Photo();
 
-                            photo.photoOwner = Convert.ToString(reader["username"]);
+                            photo.PhotoOwner = Convert.ToString(reader["username"]);
                             photo.Id = (Convert.ToInt32(reader["photoId"]));
                             photo.Caption = (Convert.ToString(reader["caption"]));
                             photo.UserId = (Convert.ToInt32(reader["userId"]));
@@ -124,31 +124,62 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("select * from photos where photoId = @id select * from comments where photoId = @id select * from likes where photoId = @id", conn);
+                    SqlCommand cmd = new SqlCommand("select * from photos where photoId = @id; select * from comments where photoId = @id; select * from likes where photoId = @id", conn);
                     cmd.Parameters.AddWithValue("@id", photo.Id);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    while (reader.Read())
+                    if (reader.Read())  // THere will be zero or one
                     {
+                        // Create the deepPhoto object
+                        deepPhoto.Id = (Convert.ToInt32(reader["id"]));
+                        deepPhoto.PhotoOwner = Convert.ToString(reader["username"]);
+                        deepPhoto.Caption = (Convert.ToString(reader["caption"]));
+                        deepPhoto.UserId = (Convert.ToInt32(reader["userId"]));
+                        deepPhoto.ImageUrl = (Convert.ToString(reader["imageUrl"]));
+                        deepPhoto.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
+                        deepPhoto.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+                    }
+                    else
+                    {
+                        // Not found - return NULL
+                        return deepPhoto;
+                    }
+
+                    /***
+                     * Get the comments. reader.NextResult moves us to the second rowset returned 
+                     * from our query (the comments)
+                     * ***/
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
                         {
-                            DeepPhoto newPhoto = new DeepPhoto();
-                            List<Comment> comments = new List<Comment>();
-                            List<Like> likes = new List<Like>();
+                            Comment comment = new Comment();
 
-                            newPhoto.photoOwner = Convert.ToString(reader["username"]);
-                            newPhoto.Id = (Convert.ToInt32(reader["photoId"]));
-                            newPhoto.Caption = (Convert.ToString(reader["caption"]));
-                            newPhoto.UserId = (Convert.ToInt32(reader["userId"]));
-                            newPhoto.ImageUrl = (Convert.ToString(reader["imageUrl"]));
-                            newPhoto.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
-                            newPhoto.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+                            comment.CommentString = Convert.ToString(reader["comment"]);
+                            comment.Id = (Convert.ToInt32(reader["id"]));
+                            comment.PhotoId = (Convert.ToInt32(reader["photoId"]));
+                            comment.CommenterId = Convert.ToInt32(reader["commenterId"]);
+                            comment.DateCommented = Convert.ToDateTime(reader["dateCommented"]);
 
+                            deepPhoto.AllComments.Add(comment);
+                        }
+                    }
+                    /***
+                     * Get the comments. reader.NextResult moves us to the second rowset returned 
+                     * from our query (the likes)
+                     * ***/
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            Like like = new Like();
                             
+                            like.Id = (Convert.ToInt32(reader["id"]));
+                            like.UserId = (Convert.ToInt32(reader["userId"]));
+                            like.PhotoId = (Convert.ToInt32(reader["photoId"]));
 
-                            deepPhoto = newPhoto;
-
-                            
-                        };
+                            deepPhoto.AllLikes.Add(like);
+                        }
                     }
                 }
             }
@@ -157,7 +188,7 @@ namespace SampleApi.DAL
                 throw;
             }
 
-            return topComment;
+            return deepPhoto;
         }
 
         //public List<Photo> GetPhotosByUser(int userId)

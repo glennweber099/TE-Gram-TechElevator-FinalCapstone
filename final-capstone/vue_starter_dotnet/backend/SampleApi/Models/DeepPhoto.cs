@@ -10,7 +10,7 @@ namespace SampleApi.Models
     /// </summary>
     public class DeepPhoto: Photo
     {
-        List<Comment> AllComments { get; set; }
-        List<Like> AllLikes { get; set; }
+        public List<Comment> AllComments { get; set; }
+        public List<Like> AllLikes { get; set; }
     }
 }
