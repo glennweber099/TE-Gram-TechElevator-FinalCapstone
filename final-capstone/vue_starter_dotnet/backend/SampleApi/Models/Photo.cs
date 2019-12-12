@@ -27,6 +27,11 @@ namespace SampleApi.Models
         public int UserId { get; set; }
 
         /// <summary>
+        /// the name of the user who uploaded the photo
+        /// </summary>
+        public string PhotoOwner { get; set;}
+
+        /// <summary>
         /// the url of the photo
         /// </summary>
         public string ImageUrl { get; set; }
