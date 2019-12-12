@@ -29,7 +29,7 @@ namespace SampleApi.Models
         /// <summary>
         /// the name of the user who uploaded the photo
         /// </summary>
-        public string PhotoOwner { get; set;}
+        public string PhotoOwner { get; set; }
 
         /// <summary>
         /// the url of the photo
@@ -45,5 +45,10 @@ namespace SampleApi.Models
         /// tells us if the photo is visible (and it won't be if it was "deleted")
         /// </summary>
         public bool IsVisible { get; set; }
+
+        /// <summary>
+        /// gives a count of the total likes associated with the photo
+        /// </summary>
+        public int totalLikes { get; set; }
     }
 }
