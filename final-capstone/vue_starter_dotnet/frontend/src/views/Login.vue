@@ -32,7 +32,7 @@
           />
           </p>
           <p>
-          <button type="submit" class="log-in-button"><strong>Log in</strong></button>
+          <button type="submit" class="login-button"><strong>Log in</strong></button>
           </p>
           <p class="create-new-account-link">Don't have an account? 
           <router-link :to="{ name: 'register' }"><strong>Sign up</strong></router-link>
@@ -110,5 +110,7 @@ export default {
 
 .login-button {
   font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
 }
 </style>

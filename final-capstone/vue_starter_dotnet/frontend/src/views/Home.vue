@@ -1,13 +1,21 @@
 <template>
   <div class="home">
-    <h1 id="home-header">Home</h1>
-    <div class="images" v-for="photo in photos" v-bind:key="photo.id">
-      <p id="photo-owner">{{photo.photoOwner}}</p>
-     <img v-bind:src="photo.imageUrl" id="photo-url">
-      <p id="photo-caption">{{photo.caption}}</p>
+    <!-- <div class="home-nav-bar"> -->
+      <h1 id="home-header">TE Gram</h1>
+      <!-- <div class="right-nav"> -->
+        <p><router-link :to="{ name: 'upload' }" class="upload-photo-link">Upload a Photo</router-link></p>
+        <p><button v-on:click="logout" id="logout-button">Click to Logout</button></p>
+      <!-- </div> -->
+    <!-- </div> -->
+      <div class="container">
+        <div class="images" v-for="photo in photos" v-bind:key="photo.id">
+          <div class="item">
+            <img v-bind:src="photo.imageUrl" id="photo-url">
+            <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
+        </div>
+      </div>
     </div>
-    <p><router-link :to="{ name: 'upload' }" class="upload-photo-link">Upload a Photo</router-link></p>
-    <p><button v-on:click="logout" id="logout-button">Click to Logout</button></p>
+
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
     replacing the token makes it associated with the user's credidentals that just typed them in
@@ -57,9 +65,22 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
 
+.home-nav-bar {
+  display: flex;
+
+}
+
+.home-nav-bar:first-child {
+  justify-content: flex-start;
+}
+
+.home-nav-bar:last-child() {
+  justify-content: flex-end;
+}
+
 #home-header {
   font-family: 'Pacifico', cursive; 
-  font-size: 3em;
+  font-size: 4em;
   text-align: center;
 }
 
@@ -76,24 +97,30 @@ export default {
 #photo-owner {
   font-family: 'Solway', serif;
   font-size: 1.2em;
+  font-weight: bolder;
   margin-bottom: 0;
 }
 
-#photo-url {
-  font-family: 'Solway', serif;
-  margin: 0;
-}
-
-#photo-caption {
-  font-family: 'Solway', serif;
-}
-
-/* .container {
+.container {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .item {
+  padding: 50px;
+  margin: 15px;
+  background-color:rgba(255, 255, 255, 0.7);
+  width: 750px;
+  border-radius: 10px;
+} 
 
-} */
+.item > img {
+  margin: 0;
+  width: 100%;
+}
+
+.item > #photo-caption {
+  font-family: 'Solway', serif;
+}
 </style> 
