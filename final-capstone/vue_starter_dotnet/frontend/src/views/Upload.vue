@@ -44,7 +44,7 @@ export default {
         thumbnailWidth: 250,
         maxFilesize: 2.0,
         acceptedFiles: ".jpg, .jpeg, .png, .gif",
-        uploadMultipe: false
+        uploadMultipe: true
       },
       post: {
         imageUrl: "",
