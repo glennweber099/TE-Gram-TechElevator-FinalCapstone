@@ -93,6 +93,7 @@ namespace SampleApi.DAL
                             photo.Id = (Convert.ToInt32(reader["photoId"]));
                             photo.Caption = (Convert.ToString(reader["caption"]));
                             photo.UserId = (Convert.ToInt32(reader["userId"]));
+                            photo.PhotoOwner = (Convert.ToString(reader["username"]));
                             photo.ImageUrl = (Convert.ToString(reader["imageUrl"]));
                             photo.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
                             photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
@@ -123,7 +124,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("select * from photos where Id = @id select * from comments where photoId = @id select count(*) as 'Total Likes' from likes where likes.photoId = @id", conn);
+                    SqlCommand cmd = new SqlCommand("select * from photos where Id = @id select * from comments where photoId = @id select count(*) as 'Total Likes' from likes where likes.photoId = @id select username from users join photos on photos.userId = users.id where photos.id = @id", conn);
                     cmd.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -171,6 +172,13 @@ namespace SampleApi.DAL
                         while (reader.Read())
                         {
                                 deepPhoto.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
+                        }
+                    }
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            deepPhoto.PhotoOwner = (Convert.ToString(reader["username"]));
                         }
                     }
                 }
