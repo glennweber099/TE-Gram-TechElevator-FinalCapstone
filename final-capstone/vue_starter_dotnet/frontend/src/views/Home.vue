@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <h1 id="home-header">Home</h1>
     <div class="images" v-for="photo in photos" v-bind:key="photo.id">
-      <p>{{photo.photoOwner}}</p>
-     <img v-bind:src="photo.imageUrl">
-      <p>{{photo.caption}}</p>
+      <p id="photo-owner">{{photo.photoOwner}}</p>
+     <img v-bind:src="photo.imageUrl" id="photo-url">
+      <p id="photo-caption">{{photo.caption}}</p>
     </div>
-    <p><router-link :to="{ name: 'upload' }">Upload a Photo</router-link></p>
-    <p><button v-on:click="logout">Click to Logout</button></p>
+    <p><router-link :to="{ name: 'upload' }" class="upload-photo-link">Upload a Photo</router-link></p>
+    <p><button v-on:click="logout" id="logout-button">Click to Logout</button></p>
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
     replacing the token makes it associated with the user's credidentals that just typed them in
@@ -53,3 +53,47 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
+
+#home-header {
+  font-family: 'Pacifico', cursive; 
+  font-size: 3em;
+  text-align: center;
+}
+
+.upload-photo-link {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1.2em;
+}
+
+#logout-button {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1.2em;
+}
+
+#photo-owner {
+  font-family: 'Solway', serif;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+#photo-url {
+  font-family: 'Solway', serif;
+  margin: 0;
+}
+
+#photo-caption {
+  font-family: 'Solway', serif;
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+
+} */
+</style> 

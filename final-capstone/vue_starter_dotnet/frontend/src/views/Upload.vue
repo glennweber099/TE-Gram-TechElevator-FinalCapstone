@@ -1,6 +1,6 @@
 <template>
   <div id="new-post" class="container">
-    <h2>Upload a photo to share</h2>
+    <h2 id="upload-header">Upload a photo to share</h2>
     <form id="post-form" v-on:submit.prevent="sharePhoto">
       <vue-dropzone
         id="dropzone"
@@ -18,7 +18,7 @@
       />
       <div class="form-actions">
         <button v-bind:disabled="!canPost" id="share">Share</button>
-        <router-link to="/" tag="button">Go Back</router-link>
+        <router-link to="/" tag="button" id="go-back">Go Back</router-link>
       </div>
     </form>
   </div>
@@ -102,5 +102,19 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
 
+#upload-header {
+  font-family: 'Pacifico', cursive; 
+  font-size: 3em;
+  text-align: center;
+}
+
+#share {
+  font-family: 'Archivo Narrow', sans-serif;
+}
+
+#go-back {
+    font-family: 'Archivo Narrow', sans-serif;
+}
 </style>

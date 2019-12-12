@@ -1,7 +1,7 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal" style="font-family: 'Pacifico', cursive; font-size: 3em;">Welcome to TE-Gram</h1>
+      <h1 class="h3 mb-3 font-weight-normal" id="login-header">Welcome to TE-Gram</h1>
       <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
        <strong> Invalid username and password! </strong>
       </div>
@@ -21,7 +21,7 @@
           />
           </p>
           <p>
-          <label for="password" class="sr-only" style="font-family: 'Girassol', cursive; font-size: 1.5em; margin-right: 5px;"><strong>Password:  </strong></label>
+          <label for="password" class="sr-only"><strong>Password:  </strong></label>
           <input
             type="password"
             id="password"
@@ -32,10 +32,10 @@
           />
           </p>
           <p>
-          <router-link :to="{ name: 'register' }" style="font-family: 'Girassol', cursive;"><strong>Create a New Account</strong></router-link>
+          <button type="submit" class="log-in-button"><strong>Log in</strong></button>
           </p>
-          <p>
-          <button type="submit"><strong>Sign in</strong></button>
+          <p class="create-new-account-link">Don't have an account? 
+          <router-link :to="{ name: 'register' }"><strong>Sign up</strong></router-link>
           </p>
     </form>
   </div>
@@ -89,6 +89,26 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
 
+#login-header {
+  font-family: 'Pacifico', cursive; 
+  font-size: 3em;
+  text-align: center;
+}
+
+.create-new-account-link {
+  font-family: 'Girassol', cursive;
+  font-size: 1.2em;
+}
+
+.sr-only {
+  font-family: 'Girassol', cursive; 
+  font-size: 1.5em; 
+  margin-right: 5px;
+}
+
+.login-button {
+  font-family: 'Archivo Narrow', sans-serif;
+}
 </style>
