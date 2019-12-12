@@ -11,7 +11,7 @@
         <div class="images" v-for="photo in photos" v-bind:key="photo.id">
           <div class="item">
             <img v-bind:src="photo.imageUrl" id="photo-url">
-            <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
+            <p><span id="photo-owner">{{photo.username}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
         </div>
       </div>
     </div>
