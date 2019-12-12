@@ -64,10 +64,10 @@ Create table comments
 	comment varchar(2200) not null,
 	id int identity(1,1),
 	photoId int not null,
-	userId int not null,
+	commenterId int not null,
 	dateCommented dateTime not null default current_TimeStamp,
 
-	constraint fk_usersComments  foreign key (userId) References users(id),
+	constraint fk_usersComments  foreign key (commenterId) References users(id),
 	constraint fk_photosComments  foreign key (photoId) References photos(id),
 	constraint pk_comments primary key (id)
 );
