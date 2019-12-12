@@ -82,7 +82,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id where isVisible = 1 ORDER BY dateAdded DESC select count(*) as 'Total Likes' from likes where likes.photoId = @id", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id left join likes on likes.photoId = photos.id where isVisible = 1 group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible ORDER BY dateAdded DESC", conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -97,7 +97,7 @@ namespace SampleApi.DAL
                             photo.ImageUrl = (Convert.ToString(reader["imageUrl"]));
                             photo.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
                             photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
-                            photo.PhotoOwner = (Convert.ToString(reader["Total Likes"]));
+                            photo.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
                             output.Add(photo);
                         };
                     }
