@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Upload from './views/Upload.vue'
+import CameraView from './views/CameraView.vue'
 
 Vue.use(Router)
 
@@ -53,6 +54,14 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: '/camera',
+      name: 'camera',
+      component: CameraView,
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 })
 

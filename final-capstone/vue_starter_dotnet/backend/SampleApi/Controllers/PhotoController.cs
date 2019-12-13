@@ -45,11 +45,11 @@ namespace SampleApi.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("search/{id}")]
+        [HttpGet("search/{userId}")]
         public IActionResult GetPhotosByUser(int userId)
         {
             List<Photo> photos = photoDAO.GetPhotosByUser(userId);
-            return Ok();
+            return Ok(photos);
         }
 
         /// <summary>

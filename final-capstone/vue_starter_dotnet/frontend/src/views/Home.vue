@@ -10,6 +10,7 @@
       <div class="right-nav-box">
         <router-link :to="{ name: 'upload' }"><button class="upload-photo-link">Upload a Photo</button></router-link>
         <button v-on:click="logout" id="logout-button">Click to Logout</button>
+        <router-link :to="{ name: 'camera'}"><button class="upload-photo-link">Take a Photo</button></router-link>
       </div>
     </div>
       <div class="container">
