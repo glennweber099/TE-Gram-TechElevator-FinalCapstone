@@ -17,7 +17,7 @@
         <div class="images" v-for="photo in photos" v-bind:key="photo.id">
           <div class="item">
             <img v-bind:src="photo.imageUrl" id="photo-url">
-            <p id="like-logo" v-on:click="toggleLike"></p>
+            <div class="heart-logo" v-on:click="toggleLike">♡</div>
             <p id="likes" v-if="photo.totalLikes > 1"><span>{{photo.totalLikes}}</span><span> likes</span></p>
             <p id="likes" v-if="photo.totalLikes == 1"><span>{{photo.totalLikes}}</span><span> like</span></p>
             <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
@@ -40,16 +40,34 @@
 
 <script>
 import auth from '../auth';
+import { ok } from 'assert';
 export default {
   name: 'home',
+
   methods: {
     logout : function(token) {
       auth.destroyToken(token);
       this.$router.push('/login')
     },
     toggleLike() {
-       
-    }
+       fetch('${process.env.VUE_APP_REMOTE_API}/like/togglelike', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + auth.getToken()
+          }
+        })
+        .then( response => {
+          if (response.ok) {
+            this.photo.likes++;
+          }
+        })
+        .then( json => {
+          console.log(json);
+          this.likes = json;
+        })
+      }
   },
   data() {
     return {
@@ -163,6 +181,11 @@ export default {
   font-family: 'Solway', serif;
   font-size: 1.2em;
   margin: 0;
+}
+
+.heart-logo {
+  font-size: 2em;
+  margin-bottom: 5px;
 }
 </style> 
 
