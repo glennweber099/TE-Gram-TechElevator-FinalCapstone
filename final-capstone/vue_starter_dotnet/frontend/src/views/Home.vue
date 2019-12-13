@@ -17,7 +17,7 @@
         <div class="images" v-for="photo in photos" v-bind:key="photo.id">
           <div class="item">
             <img v-bind:src="photo.imageUrl" id="photo-url">
-            <div class="heart-logo" v-on:click="toggleLike">♡</div>
+            <div class="heart-logo" v-on:click="toggleLike(photo.id)">♡</div>
             <p id="likes" v-if="photo.totalLikes > 1"><span>{{photo.totalLikes}}</span><span> likes</span></p>
             <p id="likes" v-if="photo.totalLikes == 1"><span>{{photo.totalLikes}}</span><span> like</span></p>
             <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
@@ -43,31 +43,31 @@ import auth from '../auth';
 import { ok } from 'assert';
 export default {
   name: 'home',
-
   methods: {
     logout : function(token) {
       auth.destroyToken(token);
       this.$router.push('/login')
     },
-    toggleLike() {
-       fetch('${process.env.VUE_APP_REMOTE_API}/like/togglelike', {
+    toggleLike(photoId) {
+      let like = {
+        'photoId' : photoId
+      }
+       fetch(`${process.env.VUE_APP_REMOTE_API}/like/togglelike`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: "Bearer " + auth.getToken()
-          }
+          },
+          body: JSON.stringify(like),
         })
         .then( response => {
           if (response.ok) {
-            this.photo.likes++;
+            this.$router.go();
           }
         })
-        .then( json => {
-          console.log(json);
-          this.likes = json;
-        })
-      }
+        .then((err) => console.error(err));
+    }
   },
   data() {
     return {
