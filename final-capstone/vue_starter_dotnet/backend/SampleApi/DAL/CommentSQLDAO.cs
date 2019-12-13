@@ -62,7 +62,7 @@ namespace SampleApi.DAL
             return output;
         }
         /// <summary>
-        /// A method to get the most recent photo on a particular photo
+        /// A method to get the most recent comment on a particular photo
         /// </summary>
         /// <param name="photoId"></param>
         public Comment GetMostRecentCommentByPhotoId(int photoId)
