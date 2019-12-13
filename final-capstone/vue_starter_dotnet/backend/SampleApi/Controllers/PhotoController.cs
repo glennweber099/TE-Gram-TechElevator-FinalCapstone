@@ -11,6 +11,9 @@ using SampleApi.Providers.Security;
 
 namespace SampleApi.Controllers
 {
+    /// <summary>
+    /// Controls actions related to photos
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PhotoController : Controller

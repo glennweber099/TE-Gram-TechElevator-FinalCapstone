@@ -15,6 +15,10 @@ namespace SampleApi.Controllers
     {
         private ILikeDAO likeDAO;
 
+        /// <summary>
+        /// A controller for likes
+        /// </summary>
+        /// <param name="likeDAO"></param>
         public LikeController(ILikeDAO likeDAO)
         {
             this.likeDAO = likeDAO;
