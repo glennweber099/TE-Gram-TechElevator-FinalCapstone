@@ -120,7 +120,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT count(likes.id) as 'Total Likes', photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id left join likes on likes.photoId = photos.id where isVisible = 1 AND WHERE photos.userId = @userId group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible ORDER BY dateAdded DESC", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT count(likes.id) as 'Total Likes', photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id left join likes on likes.photoId = photos.id where isVisible = 1 AND photos.userId = @userId group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible ORDER BY dateAdded DESC", conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
