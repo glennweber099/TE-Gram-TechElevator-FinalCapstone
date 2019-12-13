@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <!-- <div class="home-nav-bar"> -->
-      <h1 id="home-header">TE Gram</h1>
-      <!-- <div class="right-nav"> -->
-        <p><router-link :to="{ name: 'upload' }" class="upload-photo-link">Upload a Photo</router-link></p>
-        <p><button v-on:click="logout" id="logout-button">Click to Logout</button></p>
-      <!-- </div> -->
-    <!-- </div> -->
+    <div class="home-nav-container">
+      <div class="home-logo-box">
+        <img id="tegram-logo" src="./../../logo.png"/>
+      </div>
+      <div class="center-box">
+        <div id="home-header">TE Gram</div>
+      </div>
+      <div class="right-nav-box">
+        <router-link :to="{ name: 'upload' }"><button class="upload-photo-link">Upload a Photo</button></router-link>
+        <button v-on:click="logout" id="logout-button">Click to Logout</button>
+      </div>
+    </div>
       <div class="container">
         <div class="images" v-for="photo in photos" v-bind:key="photo.id">
           <div class="item">
             <img v-bind:src="photo.imageUrl" id="photo-url">
-            <p><span id="photo-owner">Total Likes:</span><span id="photo-caption">{{photo.totalLikes}}</span></p>
+            <p id="like-logo" v-on:click="toggleLike"></p>
+            <p id="likes" v-if="photo.totalLikes > 1"><span>{{photo.totalLikes}}</span><span> likes</span></p>
+            <p id="likes" v-if="photo.totalLikes == 1"><span>{{photo.totalLikes}}</span><span> like</span></p>
             <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
+            <!-- add comments to flexbox item -->
         </div>
       </div>
     </div>
@@ -38,6 +46,9 @@ export default {
       auth.destroyToken(token);
       this.$router.push('/login')
     },
+    toggleLike() {
+       
+    }
   },
   data() {
     return {
@@ -46,19 +57,20 @@ export default {
   },
   created(){
     fetch(`${process.env.VUE_APP_REMOTE_API}/photo`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: "Bearer " + auth.getToken()
-        }})
-        .then(response => {
-          return response.json();
-        })
-        .then(json => {
-          console.log(json);
-          this.photos = json;
-        });
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + auth.getToken()
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log(json);
+        this.photos = json;
+      });
   }
 }
 </script>
@@ -66,23 +78,44 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
 
-.home-nav-bar {
+.home-nav-container {
   display: flex;
-
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: solid rgba(255, 255, 255, 0.7);
+  border-top: solid rgba(255, 255, 255, 0.7);
 }
 
-.home-nav-bar:first-child {
+.home-logo-box {
+  display: flex;
   justify-content: flex-start;
+  width: 33%;
 }
 
-.home-nav-bar:last-child() {
+.center-box {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  width: 33%;
+}
+
+.right-nav-box {
+  display: flex;
+  align-self: center;
   justify-content: flex-end;
+  margin-right: 0;
+  width: 33%;
 }
 
 #home-header {
   font-family: 'Pacifico', cursive; 
   font-size: 4em;
-  text-align: center;
+  align-content: center;
+}
+#tegram-logo {
+  align-self: center;
+  width: 150px;
 }
 
 .upload-photo-link {
@@ -112,7 +145,7 @@ export default {
   padding: 50px;
   margin: 15px;
   background-color:rgba(255, 255, 255, 0.7);
-  width: 750px;
+  width: 600px;
   border-radius: 10px;
 } 
 
@@ -124,4 +157,11 @@ export default {
 .item > #photo-caption {
   font-family: 'Solway', serif;
 }
+
+#likes {
+  font-family: 'Solway', serif;
+  font-size: 1.2em;
+  margin: 0;
+}
 </style> 
+
