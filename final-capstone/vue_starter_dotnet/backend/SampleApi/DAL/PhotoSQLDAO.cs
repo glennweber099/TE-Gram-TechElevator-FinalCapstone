@@ -10,7 +10,7 @@ namespace SampleApi.DAL
     /// <summary>
     /// A SQL DAO for Photo objects
     /// </summary>
-    public class PhotoSQLDAO: IPhotoDAO
+    public class PhotoSQLDAO : IPhotoDAO
     {
         private readonly string connectionString;
 
@@ -30,7 +30,7 @@ namespace SampleApi.DAL
         {
             try
             {
-                using(SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     int userId = photo.UserId;
@@ -209,7 +209,7 @@ namespace SampleApi.DAL
                     {
                         while (reader.Read())
                         {
-                                deepPhoto.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
+                            deepPhoto.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
                         }
                     }
                     if (reader.NextResult())
