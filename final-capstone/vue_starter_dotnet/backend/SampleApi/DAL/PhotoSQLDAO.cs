@@ -111,6 +111,43 @@ namespace SampleApi.DAL
             return output;
         }
 
+        public List<Photo> GetPhotosByUser(int userId)
+        {
+            List<Photo> output = new List<Photo>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT count(likes.id) as 'Total Likes', photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id left join likes on likes.photoId = photos.id where isVisible = 1 AND WHERE photos.userId = @userId group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible ORDER BY dateAdded DESC", conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        {
+                            Photo photo = new Photo();
+
+                            photo.Id = (Convert.ToInt32(reader["photoId"]));
+                            photo.Caption = (Convert.ToString(reader["caption"]));
+                            photo.ImageUrl = (Convert.ToString(reader["imageUrl"]));
+                            photo.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
+                            photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+                            photo.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
+                            output.Add(photo);
+                        };
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// This gets a photo with a given ID as well as data about the user that submitted the photo, and all comments and likes associated with that photo
         /// </summary>

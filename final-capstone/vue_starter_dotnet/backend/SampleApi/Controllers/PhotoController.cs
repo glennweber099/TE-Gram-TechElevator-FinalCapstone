@@ -45,18 +45,10 @@ namespace SampleApi.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("user-photos")]
+        [HttpGet("search/{id}")]
         public IActionResult GetPhotosByUser(int userId)
         {
-            List<Photo> photos = photoDAO.GetPhotosByRecent();
-            List<Photo> filteredPhotos = new List<Photo>();
-            foreach(Photo photo in photos)
-            {
-                if (photo.UserId == userId)
-                {
-                    filteredPhotos.Add(photo);
-                }
-            }
+            List<Photo> photos = photoDAO.GetPhotosByUser(userId);
             return Ok();
         }
 
