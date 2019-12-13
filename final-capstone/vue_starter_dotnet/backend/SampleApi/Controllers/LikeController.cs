@@ -13,20 +13,25 @@ namespace SampleApi.Controllers
     [ApiController]
     public class LikeController : Controller
     {
+        private IUserDAO userDAO;
         private ILikeDAO likeDAO;
 
         /// <summary>
         /// A controller for likes
         /// </summary>
         /// <param name="likeDAO"></param>
-        public LikeController(ILikeDAO likeDAO)
+        public LikeController(ILikeDAO likeDAO, IUserDAO userDAO)
         {
             this.likeDAO = likeDAO;
+            this.userDAO = userDAO;
+
         }
 
         [HttpPost("togglelike")]
         public IActionResult ToggleLike(Like like)
         {
+            User user = userDAO.GetUser(User.Identity.Name);
+            like.UserId = user.Id;
             likeDAO.ToggleLike(like.PhotoId, like.UserId);
             return Ok();
         }
