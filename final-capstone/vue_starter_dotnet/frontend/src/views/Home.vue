@@ -21,7 +21,8 @@
       <div class="images" v-for="photo in photos" v-bind:key="photo.id">
         <div class="item">
           <img v-bind:src="photo.imageUrl" id="photo-url" />
-          <div class="heart-logo" v-on:click="toggleLike(photo.id)">♡</div>
+          <div class="heart-logo" v-if="photo.IsLikedByUser == true" v-on:click="toggleLike(photo.id)">❤</div>
+          <div class="heart-logo" v-if="photo.IsLikedByUser == false" v-on:click="toggleLike(photo.id)">♡</div>
           <p id="likes" v-if="photo.totalLikes > 1">
             <span>{{photo.totalLikes}} likes</span>
           </p>
@@ -30,7 +31,7 @@
           </p>
           <p>
             <span id="photo-owner">{{photo.photoOwner}}</span>
-            <span id="photo-caption">{{photo.caption}}</span>
+            <span id="photo-caption"> {{photo.caption}}</span>
           </p>
           <!-- add comments to flexbox item -->
         </div>
@@ -62,8 +63,6 @@ export default {
     toggleLike(photoId) {
       let like = {
         photoId: photoId,
-        liked: liked,
-        totalLikes: totalLikes
       };
       fetch(`${process.env.VUE_APP_REMOTE_API}/like/togglelike`, {
         method: "POST",
@@ -82,7 +81,8 @@ export default {
         .then(text => {
           this.photos.forEach(photo => {
             if (photo.id === photoId) {
-              photo.totalLikes = text;
+              photo.totalLikes = text.totalLikes;
+              photo.IsLikedByUser = text.liked;
             }
           });
         })
