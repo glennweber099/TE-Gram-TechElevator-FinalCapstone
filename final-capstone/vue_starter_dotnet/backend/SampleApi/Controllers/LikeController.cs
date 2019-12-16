@@ -32,8 +32,8 @@ namespace SampleApi.Controllers
         {
             User user = userDAO.GetUser(User.Identity.Name);
             like.UserId = user.Id;
-            likeDAO.ToggleLike(like.PhotoId, like.UserId);
-            return Ok();
+            int totalLikes = likeDAO.ToggleLike(like.PhotoId, like.UserId);
+            return Ok(totalLikes);
         }
     }
 }

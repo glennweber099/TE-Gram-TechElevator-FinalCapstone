@@ -15,7 +15,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        void ToggleLike(int photoId, int userId);
+        int ToggleLike(int photoId, int userId);
 
     }
 }

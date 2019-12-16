@@ -27,7 +27,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        public void ToggleLike(int photoId, int userId)
+        public int ToggleLike(int photoId, int userId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -54,6 +54,12 @@ namespace SampleApi.DAL
 
                     cmd.ExecuteNonQuery();
                 }
+
+                // Get the number of likes on the photo
+                cmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
+                cmd.Parameters.AddWithValue("@photoId", photoId);
+
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
 
