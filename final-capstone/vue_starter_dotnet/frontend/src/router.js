@@ -6,10 +6,10 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Upload from './views/Upload.vue'
 import CameraView from './views/CameraView.vue'
+import PhotoDetail from './views/PhotoDetail.vue'
 
 Vue.use(Router)
-
-/**
+/*
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
  *
@@ -58,6 +58,14 @@ const router = new Router({
       path: '/camera',
       name: 'camera',
       component: CameraView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: PhotoDetail,
       meta: {
         requiresAuth: true
       }
