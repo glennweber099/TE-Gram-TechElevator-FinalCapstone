@@ -61,7 +61,9 @@ export default {
     },
     toggleLike(photoId) {
       let like = {
-        photoId: photoId
+        photoId: photoId,
+        liked: liked,
+        totalLikes: totalLikes
       };
       fetch(`${process.env.VUE_APP_REMOTE_API}/like/togglelike`, {
         method: "POST",

@@ -37,25 +37,33 @@ namespace SampleApi.DAL
                 SqlCommand cmd = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId", conn);
                 cmd.Parameters.AddWithValue("@photoId", photoId);
                 cmd.Parameters.AddWithValue("@userId", userId);
+                
                 if (cmd.ExecuteScalar() != null)
                 {
                     cmd = new SqlCommand("DELETE likes WHERE photoId = @photoId AND userId = @userId", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.ExecuteReader();
                 }
                 else
                 {
                     cmd = new SqlCommand("INSERT likes (photoId, userId) VALUES (@photoId, @userId)", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.ExecuteReader();
                 }
 
-                cmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
-                cmd.Parameters.AddWithValue("@photoId", photoId);
+                SqlCommand cmmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
+                cmmd.Parameters.AddWithValue("@photoId", photoId);
+                cmmd.Parameters.AddWithValue("@userId", userId);
 
-                output.TotalLikes = Convert.ToInt32(cmd.ExecuteScalar());
+                output.TotalLikes = Convert.ToInt32(cmmd.ExecuteScalar());
                 output.PhotoId = photoId;
-                output.Liked = !output.Liked;
+                SqlCommand commd = new SqlCommand("SELECT* FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
+                commd.Parameters.AddWithValue("@photoId", photoId);
+                commd.Parameters.AddWithValue("@userId", userId);
+                output.Liked = Convert.ToBoolean(cmmd.ExecuteScalar());
+
 
                 return output;
 
