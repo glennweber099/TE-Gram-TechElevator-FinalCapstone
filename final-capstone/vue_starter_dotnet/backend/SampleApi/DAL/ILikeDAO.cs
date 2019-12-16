@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SampleApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        int ToggleLike(int photoId, int userId);
+        LikedByUser ToggleLike(int photoId, int userId);
 
     }
 }

@@ -27,14 +27,14 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        public int ToggleLike(int photoId, int userId)
+        public LikedByUser ToggleLike(int photoId, int userId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-
+                LikedByUser output = new LikedByUser();
                 // Find out if photo is already liked by user
-                SqlCommand cmd = new SqlCommand("SELECT id FROM likes WHERE photoId = @photoId AND userId = @userId", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId)", conn);
                 cmd.Parameters.AddWithValue("@photoId", photoId);
                 cmd.Parameters.AddWithValue("@userId", userId);
 
@@ -43,26 +43,26 @@ namespace SampleApi.DAL
                     cmd = new SqlCommand("DELETE likes WHERE photoId = @photoId AND userId = @userId", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
-
-                    cmd.ExecuteNonQuery();
+                    output.Liked = false;
                 }
                 else
                 {
                     cmd = new SqlCommand("INSERT likes (photoId, userId) VALUES (@photoId, @userId)", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
-
-                    cmd.ExecuteNonQuery();
+                    output.Liked = true;
                 }
 
-                // Get the number of likes on the photo
                 cmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
                 cmd.Parameters.AddWithValue("@photoId", photoId);
 
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
+                output.TotalLikes = Convert.ToInt32(cmd.ExecuteScalar());
+                output.PhotoId = photoId;
 
-        
+                return output;
+
+            }
+            // Get the number of likes on the photo
+        }
     }
 }
