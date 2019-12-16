@@ -2,26 +2,37 @@
   <div class="home">
     <div class="home-nav-container">
       <div class="home-logo-box">
-        <img id="tegram-logo" src="./../../logo.png"/>
+        <img id="tegram-logo" src="./../../logo.png" />
       </div>
       <div class="center-box">
         <div id="home-header">TE Gram</div>
       </div>
       <div class="right-nav-box">
-        <router-link :to="{ name: 'upload' }"><button class="upload-photo-link">Upload a Photo</button></router-link>
+        <router-link :to="{ name: 'upload' }">
+          <button class="upload-photo-link">Upload a Photo</button>
+        </router-link>
         <button v-on:click="logout" id="logout-button">Click to Logout</button>
-        <router-link :to="{ name: 'camera'}"><button class="upload-photo-link">Take a Photo</button></router-link>
+        <router-link :to="{ name: 'camera'}">
+          <button class="upload-photo-link">Take a Photo</button>
+        </router-link>
       </div>
     </div>
-      <div class="container">
-        <div class="images" v-for="photo in photos" v-bind:key="photo.id">
-          <div class="item">
-            <img v-bind:src="photo.imageUrl" id="photo-url">
-            <div class="heart-logo" v-on:click="toggleLike(photo.id)">♡</div>
-            <p id="likes" v-if="photo.totalLikes > 1"><span>{{photo.totalLikes}}</span><span> likes</span></p>
-            <p id="likes" v-if="photo.totalLikes == 1"><span>{{photo.totalLikes}}</span><span> like</span></p>
-            <p><span id="photo-owner">{{photo.photoOwner}}  </span><span id="photo-caption">{{photo.caption}}</span></p>
-            <!-- add comments to flexbox item -->
+    <div class="container">
+      <div class="images" v-for="photo in photos" v-bind:key="photo.id">
+        <div class="item">
+          <img v-bind:src="photo.imageUrl" id="photo-url" />
+          <div class="heart-logo" v-on:click="toggleLike(photo.id)">♡</div>
+          <p id="likes" v-if="photo.totalLikes > 1">
+            <span>{{photo.totalLikes}} likes</span>
+          </p>
+          <p id="likes" v-if="photo.totalLikes == 1">
+            <span>{{photo.totalLikes}} like</span>
+          </p>
+          <p>
+            <span id="photo-owner">{{photo.photoOwner}}</span>
+            <span id="photo-caption">{{photo.caption}}</span>
+          </p>
+          <!-- add comments to flexbox item -->
         </div>
       </div>
     </div>
@@ -34,52 +45,59 @@
     Since it does not fully log out the user in theory
     if the user were to click the home button, they would still be able to see the page you can only see if you were logged in as that user
     There is an "auth.destroyToken(token)" which takes a token (opposite of what was used in Login.vue Line 81)
-    but you need the token in order to do that and I am not sure how to access that token from here  -->
+    but you need the token in order to do that and I am not sure how to access that token from here-->
   </div>
 </template>
 
 <script>
-import auth from '../auth';
-import { ok } from 'assert';
+import auth from "../auth";
+// import { ok } from "assert";
 export default {
-  name: 'home',
+  name: "home",
   methods: {
-    logout : function(token) {
+    logout: function(token) {
       auth.destroyToken(token);
-      this.$router.push('/login')
+      this.$router.push("/login");
     },
     toggleLike(photoId) {
       let like = {
-        'photoId' : photoId
-      }
-       fetch(`${process.env.VUE_APP_REMOTE_API}/like/togglelike`, {
-        method: 'POST',
+        photoId: photoId
+      };
+      fetch(`${process.env.VUE_APP_REMOTE_API}/like/togglelike`, {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: "Bearer " + auth.getToken()
-          },
-          body: JSON.stringify(like),
-        })
-        .then( response => {
+        },
+        body: JSON.stringify(like)
+      })
+        .then(response => {
           if (response.ok) {
-            this.$router.go();
+            return response.json();
           }
         })
-        .then((err) => console.error(err));
+        .then(text => {
+          this.photos.forEach(photo => {
+            if (photo.id === photoId) {
+              photo.totalLikes = text;
+            }
+          });
+        })
+        .then(err => console.error(err));
     }
   },
   data() {
     return {
-      photos: [],
-    }
+      photos: []
+    };
   },
-  created(){
+  created() {
     fetch(`${process.env.VUE_APP_REMOTE_API}/photo`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: "Bearer " + auth.getToken()
       }
     })
@@ -91,11 +109,11 @@ export default {
         this.photos = json;
       });
   }
-}
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap");
 
 .home-nav-container {
   display: flex;
@@ -128,7 +146,7 @@ export default {
 }
 
 #home-header {
-  font-family: 'Pacifico', cursive; 
+  font-family: "Pacifico", cursive;
   font-size: 4em;
   align-content: center;
 }
@@ -138,17 +156,17 @@ export default {
 }
 
 .upload-photo-link {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
 }
 
 #logout-button {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
 }
 
 #photo-owner {
-  font-family: 'Solway', serif;
+  font-family: "Solway", serif;
   font-size: 1.2em;
   font-weight: bolder;
   margin-bottom: 0;
@@ -163,10 +181,10 @@ export default {
 .item {
   padding: 50px;
   margin: 15px;
-  background-color:rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   width: 600px;
   border-radius: 10px;
-} 
+}
 
 .item > img {
   margin: 0;
@@ -174,11 +192,11 @@ export default {
 }
 
 .item > #photo-caption {
-  font-family: 'Solway', serif;
+  font-family: "Solway", serif;
 }
 
 #likes {
-  font-family: 'Solway', serif;
+  font-family: "Solway", serif;
   font-size: 1.2em;
   margin: 0;
 }
