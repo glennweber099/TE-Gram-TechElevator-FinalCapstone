@@ -34,23 +34,20 @@ namespace SampleApi.DAL
                 conn.Open();
                 LikedByUser output = new LikedByUser();
                 // Find out if photo is already liked by user
-                SqlCommand cmd = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId)", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId", conn);
                 cmd.Parameters.AddWithValue("@photoId", photoId);
                 cmd.Parameters.AddWithValue("@userId", userId);
-
                 if (cmd.ExecuteScalar() != null)
                 {
                     cmd = new SqlCommand("DELETE likes WHERE photoId = @photoId AND userId = @userId", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
-                    output.Liked = false;
                 }
                 else
                 {
                     cmd = new SqlCommand("INSERT likes (photoId, userId) VALUES (@photoId, @userId)", conn);
                     cmd.Parameters.AddWithValue("@photoId", photoId);
                     cmd.Parameters.AddWithValue("@userId", userId);
-                    output.Liked = true;
                 }
 
                 cmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
@@ -58,11 +55,11 @@ namespace SampleApi.DAL
 
                 output.TotalLikes = Convert.ToInt32(cmd.ExecuteScalar());
                 output.PhotoId = photoId;
+                output.Liked = !output.Liked;
 
                 return output;
 
             }
-            // Get the number of likes on the photo
         }
     }
 }
