@@ -73,7 +73,7 @@ namespace SampleApi.DAL
         /// returns a list of photos, starting with the most recent
         /// </summary>
         /// <returns></returns>
-        public List<Photo> GetPhotosByRecent()
+        public List<Photo> GetPhotosByRecent(User user)
         {
             List<Photo> output = new List<Photo>();
             try
@@ -82,7 +82,28 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible FROM photos join users on photos.userId = users.id left join likes on likes.photoId = photos.id where isVisible = 1 group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible ORDER BY dateAdded DESC", conn);
+                    SqlCommand cmd;
+                    if (user != null)
+                    {
+                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = CASE WHEN EXISTS(SELECT * FROM likes WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END
+                                                        FROM photos 
+                                                        join users on photos.userId = users.id 
+                                                        left join likes on likes.photoId = photos.id 
+                                                        where isVisible = 1 
+                                                        group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible 
+                                                        ORDER BY dateAdded DESC", conn);
+                        cmd.Parameters.AddWithValue("userId", user.Id);
+                    }
+                    else
+                    {
+                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = 0
+                                                        FROM photos 
+                                                        join users on photos.userId = users.id 
+                                                        left join likes on likes.photoId = photos.id 
+                                                        where isVisible = 1 
+                                                        group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible 
+                                                        ORDER BY dateAdded DESC", conn);
+                    }
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -98,6 +119,7 @@ namespace SampleApi.DAL
                             photo.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
                             photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
                             photo.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
+                            photo.IsLikedByUser = Convert.ToBoolean(reader["isLikedByUser"]);
                             output.Add(photo);
                         };
                     }

@@ -40,7 +40,13 @@ namespace SampleApi.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Photo> photos = photoDAO.GetPhotosByRecent();
+            User user = null;
+            if (User.Identity.Name != null)
+            {
+                user = userDAO.GetUser(User.Identity.Name);
+            }
+
+            List<Photo> photos = photoDAO.GetPhotosByRecent(user);
             return Ok(photos);
         }
         /// <summary>

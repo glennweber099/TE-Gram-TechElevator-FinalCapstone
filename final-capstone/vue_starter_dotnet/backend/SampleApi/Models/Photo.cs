@@ -50,5 +50,10 @@ namespace SampleApi.Models
         /// gives a count of the total likes associated with the photo
         /// </summary>
         public int totalLikes { get; set; }
+
+        /// <summary>
+        /// Indicates if the photo is liked by the currently logged in user
+        /// </summary>
+        public bool IsLikedByUser { get; set; }
     }
 }

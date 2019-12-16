@@ -25,7 +25,7 @@ namespace SampleApi.DAL
         /// Retrieves data for all photos from the database, ordering by most recently uploaded first
         /// </summary>
         /// <returns></returns>
-        List<Photo> GetPhotosByRecent();
+        List<Photo> GetPhotosByRecent(User user);
 
         /// <summary>
         /// Get all photo details by Id
