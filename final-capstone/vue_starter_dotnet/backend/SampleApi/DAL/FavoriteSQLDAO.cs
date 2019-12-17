@@ -77,7 +77,7 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT photos.id, photos.caption, photos.dateAdded, photos.isVisible, photos.userId, photos.imageUrl FROM photos JOIN favorites ON favorites.photoId = photos.Id WHERE favorites.userId = @userId ORDER BY dateAdded DESC", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT photos.id as 'photoId', photos.caption, photos.dateAdded, photos.isVisible, photos.userId, photos.imageUrl FROM photos JOIN favorites ON favorites.photoId = photos.Id WHERE favorites.userId = @userId ORDER BY dateAdded DESC", conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 

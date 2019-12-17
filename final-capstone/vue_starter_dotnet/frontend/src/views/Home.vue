@@ -11,6 +11,9 @@
         <router-link :to="{ name: 'upload' }">
           <button class="upload-photo-link">Upload a Photo</button>
         </router-link>
+        <router-link :to="{ name: 'favorites' }">
+          <button class="upload-photo-link">View All Favorites</button>
+        </router-link>
         <button v-on:click="logout" id="logout-button">Click to Logout</button>
         <router-link :to="{ name: 'camera'}">
           <button class="upload-photo-link">Take a Photo</button>
@@ -34,7 +37,7 @@
             <span>{{photo.totalLikes}} like</span>
           </p>
           <p v-if="photo.isFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✔</span>
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⚜</span>
           </p>
           <p v-else>
             <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
@@ -43,7 +46,6 @@
             <span id="photo-owner">{{photo.photoOwner}}</span>
             <span id="photo-caption"> {{photo.caption}}</span>
           </p>
-          <!-- add comments to flexbox item -->
         </div>
       </div>
     </div>
