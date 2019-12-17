@@ -33,11 +33,11 @@
           <p id="likes" v-if="photo.totalLikes == 1">
             <span>{{photo.totalLikes}} like</span>
           </p>
-          <p v-if="photo.IsFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⭕</span>
+          <p v-if="photo.isFavoritedByUser == true">
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✔</span>
           </p>
           <p v-else>
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">❌</span>
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
           </p>
           <p>
             <span id="photo-owner">{{photo.photoOwner}}</span>
@@ -119,7 +119,7 @@ export default {
         .then(text => {
           this.photos.forEach(photo => {
             if (photo.id === photoId) {
-              photo.IsFavoritedByUser = text.favorited;
+              photo.isFavoritedByUser = text.favorited;
             }
           });
         })
