@@ -34,9 +34,8 @@ namespace SampleApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("insert into users (username, password, salt, role, email) Values (@username, @password, @salt, @role, @email)", conn);
+                    SqlCommand cmd = new SqlCommand("insert into users (username, password, salt, role) Values (@username, @password, @salt, @role)", conn);
                     cmd.Parameters.AddWithValue("@username", user.Username);
-                    cmd.Parameters.AddWithValue("@email", user.Email);
                     cmd.Parameters.AddWithValue("@password", user.Password);
                     cmd.Parameters.AddWithValue("@salt", user.Salt);
                     cmd.Parameters.AddWithValue("@role", user.Role);
@@ -63,7 +62,7 @@ namespace SampleApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("DELETE FROM users WHERE id = @id;", conn);
+                    SqlCommand cmd = new SqlCommand("update users set isDeactivated = 1 where id = @id;", conn);
                     cmd.Parameters.AddWithValue("@id", user.Id);                    
 
                     cmd.ExecuteNonQuery();
@@ -109,21 +108,19 @@ namespace SampleApi.DAL
             }            
         }
 
-        /// <summary>
-        /// Updates the user in the database.
-        /// </summary>
-        /// <param name="user"></param>
-        public void UpdateUser(User user)
+       /// <summary>
+       /// Allows a user to update their username
+       /// </summary>
+       /// <param name="user"></param>
+        public void UpdateUsername(User user)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("UPDATE users SET password = @password, salt = @salt, role = @role WHERE id = @id;", conn);                    
-                    cmd.Parameters.AddWithValue("@password", user.Password);
-                    cmd.Parameters.AddWithValue("@salt", user.Salt);
-                    cmd.Parameters.AddWithValue("@role", user.Role);
+                    SqlCommand cmd = new SqlCommand("UPDATE users SET username = @username WHERE id = @id;", conn);
+                    cmd.Parameters.AddWithValue("@username", user.Username);
                     cmd.Parameters.AddWithValue("@id", user.Id);
 
                     cmd.ExecuteNonQuery();
@@ -136,6 +133,8 @@ namespace SampleApi.DAL
                 throw ex;
             }
         }
+
+       
 
         private User MapRowToUser(SqlDataReader reader)
         {
