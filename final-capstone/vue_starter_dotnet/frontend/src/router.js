@@ -72,8 +72,8 @@ const router = new Router({
       }
     },
     {
-      path: '/detail',
-      name: 'detail',
+      path: "/detail/photo/:photoId",
+      name: "detail",
       component: PhotoDetail,
       meta: {
         requiresAuth: true

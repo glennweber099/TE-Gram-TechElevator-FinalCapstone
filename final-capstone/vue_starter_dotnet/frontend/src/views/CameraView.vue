@@ -1,4 +1,25 @@
 <template>
+<div class="home">
+    <div class="home-nav-container">
+      <div class="home-logo-box">
+        <img id="tegram-logo" src="./../../logo.png" />
+      </div>
+      <div class="center-box">
+        <div id="home-header">TE Gram</div>
+      </div>
+      <div class="right-nav-box">
+        <router-link :to="{ name: 'upload' }">
+          <button class="upload-photo-link">Upload a Photo</button>
+        </router-link>
+        <router-link :to="{ name: 'favorites' }">
+          <button class="upload-photo-link">View All Favorites</button>
+        </router-link>
+        <button v-on:click="logout" id="logout-button">Click to Logout</button>
+        <router-link :to="{ name: 'camera'}">
+          <button class="upload-photo-link">Take a Photo</button>
+        </router-link>
+      </div>
+    </div>
 <div>
     <div class="camera-modal">
       <video ref="video" class="camera-stream"/>

@@ -23,29 +23,34 @@
     <div class="container">
       <div class="images" v-for="photo in photos" v-bind:key="photo.id">
         <div class="item">
-          <img v-on:dblclick="toggleLike(photo.id)" v-bind:src="photo.imageUrl" id="photo-url"/>
-          <p v-if="photo.IsLikedByUser == true">
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">❤</span>
-          </p>
-          <p v-else>
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">♡</span>
-          </p>
+          <router-link :to="{ name: 'detail/photo/' + photo.photoId }">
+           <img  v-bind:src="photo.imageUrl" id="photo-url"/>
+          </router-link>
+         <div class="button-container">
+          <div class="button-item-like" v-if="photo.IsLikedByUser == true">
+            <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
+          </div>
+          <div v-else class="button-item-like">
+            <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
+          </div>
+          <div class="button-item-favorite" v-if="photo.isFavoritedByUser == true">
+            <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
+          </div>
+          <div class="button-item-favorite" v-else>
+            <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+          </div>
+        </div>
           <p id="likes" v-if="photo.totalLikes > 1">
             <span>{{photo.totalLikes}} likes</span>
           </p>
           <p id="likes" v-if="photo.totalLikes == 1">
             <span>{{photo.totalLikes}} like</span>
           </p>
-          <p v-if="photo.isFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⚜</span>
-          </p>
-          <p v-else>
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
-          </p>
           <p>
             <span id="photo-owner">{{photo.photoOwner}}</span>
             <span id="photo-caption"> {{photo.caption}}</span>
           </p>
+          <!-- put comments in container here -->
         </div>
       </div>
     </div>
@@ -126,6 +131,9 @@ export default {
           });
         })
         .then(err => console.error(err));
+      },
+      detail: function(photoId) {   
+        this.$router.push("/{photoId}")
       }
   },
   data() {
@@ -242,9 +250,42 @@ export default {
   margin: 0;
 }
 
-.heart-logo {
+.not-liked-logo {
   font-size: 2em;
   margin-bottom: 5px;
+}
+
+.liked-logo {
+  font-size: 1.4em;
+  margin-bottom: 5px;
+}
+
+.favorited-logo {
+  font-size: 1.3em;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.not-favorited-logo {
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.button-item-like {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.button-item-favorite {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style> 
 
