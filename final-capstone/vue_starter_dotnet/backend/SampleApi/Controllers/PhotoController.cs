@@ -74,7 +74,6 @@ namespace SampleApi.Controllers
             photoDAO.UploadPhoto(photo);
             return Ok();
         }
-
         /// <summary>
         /// Allows the user to delete their own photos
         /// </summary>
