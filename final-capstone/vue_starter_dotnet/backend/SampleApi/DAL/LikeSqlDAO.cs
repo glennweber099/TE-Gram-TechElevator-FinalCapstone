@@ -60,10 +60,10 @@ namespace SampleApi.DAL
 
                 output.PhotoId = photoId;
 
-                SqlCommand Liked = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
+                SqlCommand Liked = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId", conn);
                 Liked.Parameters.AddWithValue("@photoId", photoId);
                 Liked.Parameters.AddWithValue("@userId", userId);
-                output.Liked = Convert.ToBoolean(TotalLikes.ExecuteScalar());
+                output.Liked = Convert.ToBoolean(Liked.ExecuteScalar());
 
 
                 return output;

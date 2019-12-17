@@ -33,6 +33,12 @@
           <p id="likes" v-if="photo.totalLikes == 1">
             <span>{{photo.totalLikes}} like</span>
           </p>
+          <p v-if="photo.IsFavoritedByUser == true">
+            <span class="heart-logo" v-on:click="(photo.id)">⚜</span>
+          </p>
+          <p v-else>
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⭕</span>
+          </p>
           <p>
             <span id="photo-owner">{{photo.photoOwner}}</span>
             <span id="photo-caption"> {{photo.caption}}</span>
@@ -91,7 +97,34 @@ export default {
           });
         })
         .then(err => console.error(err));
-    }
+    },
+      toggleFavorite(photoId) {
+      let favorite = {
+        photoId: photoId,
+      };
+      fetch(`${process.env.VUE_APP_REMOTE_API}/favorite/toggleafavorite`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.getToken()
+        },
+        body: JSON.stringify(favorite)
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then(text => {
+          this.photos.forEach(photo => {
+            if (photo.id === photoId) {
+              photo.IsFavoritedByUser = text.favorited;
+            }
+          });
+        })
+        .then(err => console.error(err));
+      }
   },
   data() {
     return {

@@ -39,7 +39,6 @@ CREATE TABLE photos
     id int identity(1,1),
 	caption varchar(5000) null,
 	userId int not null,
-	photoOwner varchar(200) not null,
     imageUrl varchar(5000) not null, 
 	dateAdded dateTime  not null default current_TimeStamp,
 	isVisible bit not null default 1,
@@ -85,5 +84,3 @@ create table favorites
 	constraint fk_usersFavorites  foreign key (userId) References users(id),
 );
 COMMIT TRANSACTION;
-
-select * from comments
