@@ -9,7 +9,7 @@ namespace SampleApi.DAL
     /// <summary>
     /// An interface to handle data related to Favorites
     /// </summary>
-    public interface IFavoriteSQLDAO
+    public interface IFavoriteDAO
     {
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        FavoritedByUser ToggleAFavorite(int photoId, int userId);
+        FavoritedByUser ToggleFavorite(int photoId, int userId);
 
         /// <summary>
         /// Allows a user with a given userId to view all photos in their favorites list

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SampleApi.DAL
 {
-    public class FavoriteSQLDAO: IFavoriteSQLDAO
+    public class FavoriteSQLDAO: IFavoriteDAO
     {
         private readonly string connectionString;
 
@@ -26,7 +26,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        public FavoritedByUser ToggleAFavorite(int photoId, int userId)
+        public FavoritedByUser ToggleFavorite(int photoId, int userId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {

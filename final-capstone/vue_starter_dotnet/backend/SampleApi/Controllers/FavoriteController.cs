@@ -15,14 +15,14 @@ namespace SampleApi.Controllers
     [ApiController]
     public class FavoriteController : Controller
     {
-        private IFavoriteSQLDAO favoriteDAO;
+        private IFavoriteDAO favoriteDAO;
         private IUserDAO userDAO;
 
         /// <summary>
         /// Creates a new controller to handle favorites
         /// </summary>
         /// <param name="favoriteDAO"></param>
-        public FavoriteController(IFavoriteSQLDAO favoriteDAO, IUserDAO userDAO)
+        public FavoriteController(IFavoriteDAO favoriteDAO, IUserDAO userDAO)
         {
             this.favoriteDAO = favoriteDAO;
             this.userDAO = userDAO;
@@ -33,12 +33,12 @@ namespace SampleApi.Controllers
         /// </summary>
         /// <param name="fav"></param>
         /// <returns></returns>
-        [HttpPost("toggleafavorite")]
-        public IActionResult ToggleAFavorite(Favorite fav)
+        [HttpPost("togglefavorite")]
+        public IActionResult ToggleFavorite(Favorite fav)
         {
             User user = userDAO.GetUser(User.Identity.Name);
             fav.UserId = user.Id;
-            FavoritedByUser output = favoriteDAO.ToggleAFavorite(fav.PhotoId, fav.UserId);
+            FavoritedByUser output = favoriteDAO.ToggleFavorite(fav.PhotoId, fav.UserId);
             return Ok(output);
         }
 
