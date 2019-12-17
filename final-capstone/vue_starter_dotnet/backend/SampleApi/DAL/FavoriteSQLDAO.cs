@@ -77,7 +77,13 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT photos.id as 'photoId', photos.caption, photos.dateAdded, photos.isVisible, photos.userId, photos.imageUrl FROM photos JOIN favorites ON favorites.photoId = photos.Id WHERE favorites.userId = @userId ORDER BY dateAdded DESC", conn);
+                    SqlCommand cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = CASE WHEN EXISTS(SELECT * FROM likes WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END, isFavoritedByUser = CASE WHEN EXISTS(SELECT * FROM favorites WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END
+                                                        FROM photos
+                                                        join users on photos.userId = users.id
+                                                        left join likes on likes.photoId = photos.id           
+                                                        where isVisible = 1
+                                                        group by likes.photoId, users.id, users.username, photos.caption, photos.dateAdded, photos.id, photos.imageUrl, photos.isVisible
+                                                        ORDER BY dateAdded DESC", conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 

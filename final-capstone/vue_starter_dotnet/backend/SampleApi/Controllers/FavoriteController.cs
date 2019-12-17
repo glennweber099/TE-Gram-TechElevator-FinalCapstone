@@ -48,11 +48,11 @@ namespace SampleApi.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("getallfavoritesbyuser")]
-        public IActionResult GetAllFavoritesByUser(User user)
+        public IActionResult GetAllFavoritesByUser(int userId)
         {
-            User user2 = userDAO.GetUser(User.Identity.Name);
-            user2.Id = user.Id;
-            List<Photo> favPhotos = favoriteDAO.GetAllFavoritesByUser(user.Id);
+            User user = userDAO.GetUser(User.Identity.Name);
+            userId = user.Id;
+            List<Photo> favPhotos = favoriteDAO.GetAllFavoritesByUser(userId);
             return Ok(favPhotos);
         }
     }
