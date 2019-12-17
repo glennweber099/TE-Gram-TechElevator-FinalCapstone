@@ -28,7 +28,6 @@ namespace SampleApi.Controllers
 
         }
 
-        [Authorize]
         [HttpPost("togglelike")]
         public IActionResult ToggleLike(Like like)
         {
