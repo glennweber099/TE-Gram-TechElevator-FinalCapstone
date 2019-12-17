@@ -85,7 +85,7 @@ namespace SampleApi.DAL
                     SqlCommand cmd;
                     if (user != null)
                     {
-                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = CASE WHEN EXISTS(SELECT * FROM likes WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END
+                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = CASE WHEN EXISTS(SELECT * FROM likes WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END, isFavoritedByUser = CASE WHEN EXISTS(SELECT * FROM favorites WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END
                                                         FROM photos 
                                                         join users on photos.userId = users.id 
                                                         left join likes on likes.photoId = photos.id 
@@ -96,7 +96,7 @@ namespace SampleApi.DAL
                     }
                     else
                     {
-                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = 0
+                        cmd = new SqlCommand(@"SELECT count(likes.id) as 'Total Likes', users.id  as 'userId', users.username, photos.caption, photos.dateAdded, photos.id as 'photoId', photos.imageUrl, photos.isVisible, isLikedByUser = 0, isFavoritedByUser = 0
                                                         FROM photos 
                                                         join users on photos.userId = users.id 
                                                         left join likes on likes.photoId = photos.id 
@@ -120,6 +120,7 @@ namespace SampleApi.DAL
                             photo.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
                             photo.totalLikes = (Convert.ToInt32(reader["Total Likes"]));
                             photo.IsLikedByUser = Convert.ToBoolean(reader["isLikedByUser"]);
+                            photo.IsFavoritedByUser = Convert.ToBoolean(reader["isFavoritedByUser"]);
                             output.Add(photo);
                         };
                     }

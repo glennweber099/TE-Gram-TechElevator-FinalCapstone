@@ -26,12 +26,12 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        public void ToggleAFavorite(int photoId, int userId)
+        public FavoritedByUser ToggleAFavorite(int photoId, int userId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-
+                FavoritedByUser output = new FavoritedByUser();
                 // Find out if photo is already favorited by user
                 SqlCommand cmd = new SqlCommand("SELECT id FROM favorites WHERE photoId = @photoId AND userId = @userId", conn);
                 cmd.Parameters.AddWithValue("@photoId", photoId);
@@ -53,6 +53,13 @@ namespace SampleApi.DAL
 
                     cmd.ExecuteNonQuery();
                 }
+                output.PhotoId = photoId;
+                SqlCommand commd = new SqlCommand("SELECT* FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
+                commd.Parameters.AddWithValue("@photoId", photoId);
+                commd.Parameters.AddWithValue("@userId", userId);
+                output.Favorited = Convert.ToBoolean(commd.ExecuteScalar());
+
+                return output;
             }
         }
 

@@ -55,5 +55,10 @@ namespace SampleApi.Models
         /// Indicates if the photo is liked by the currently logged in user
         /// </summary>
         public bool IsLikedByUser { get; set; }
+
+        /// <summary>
+        /// Indicates if the photo is favorited by the currently logged in user
+        /// </summary>
+        public bool IsFavoritedByUser { get; set; }
     }
 }

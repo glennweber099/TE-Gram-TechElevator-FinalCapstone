@@ -38,8 +38,8 @@ namespace SampleApi.Controllers
         {
             User user = userDAO.GetUser(User.Identity.Name);
             fav.UserId = user.Id;
-            favoriteDAO.ToggleAFavorite(fav.PhotoId, fav.UserId);
-            return Ok();
+            FavoritedByUser output = favoriteDAO.ToggleAFavorite(fav.PhotoId, fav.UserId);
+            return Ok(output);
         }
 
         /// <summary>

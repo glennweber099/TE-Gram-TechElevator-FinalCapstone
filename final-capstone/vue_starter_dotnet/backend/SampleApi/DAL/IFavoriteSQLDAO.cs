@@ -17,7 +17,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photoId"></param>
         /// <param name="userId"></param>
-        void ToggleAFavorite(int photoId, int userId);
+        FavoritedByUser ToggleAFavorite(int photoId, int userId);
 
         /// <summary>
         /// Allows a user with a given userId to view all photos in their favorites list
