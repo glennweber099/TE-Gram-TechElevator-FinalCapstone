@@ -54,7 +54,7 @@ namespace SampleApi.DAL
                     cmd.ExecuteNonQuery();
                 }
                 output.PhotoId = photoId;
-                SqlCommand commd = new SqlCommand("SELECT* FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
+                SqlCommand commd = new SqlCommand("SELECT * FROM favorites WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
                 commd.Parameters.AddWithValue("@photoId", photoId);
                 commd.Parameters.AddWithValue("@userId", userId);
                 output.Favorited = Convert.ToBoolean(commd.ExecuteScalar());

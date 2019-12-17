@@ -34,35 +34,36 @@ namespace SampleApi.DAL
                 conn.Open();
                 LikedByUser output = new LikedByUser();
                 // Find out if photo is already liked by user
-                SqlCommand cmd = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId", conn);
-                cmd.Parameters.AddWithValue("@photoId", photoId);
-                cmd.Parameters.AddWithValue("@userId", userId);
+                SqlCommand AddOrDeleteLike = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId", conn);
+                AddOrDeleteLike.Parameters.AddWithValue("@photoId", photoId);
+                AddOrDeleteLike.Parameters.AddWithValue("@userId", userId);
                 
-                if (cmd.ExecuteScalar() != null)
+                if (AddOrDeleteLike.ExecuteScalar() != null)
                 {
-                    cmd = new SqlCommand("DELETE likes WHERE photoId = @photoId AND userId = @userId", conn);
-                    cmd.Parameters.AddWithValue("@photoId", photoId);
-                    cmd.Parameters.AddWithValue("@userId", userId);
-                    cmd.ExecuteReader();
+                    AddOrDeleteLike = new SqlCommand("DELETE likes WHERE photoId = @photoId AND userId = @userId", conn);
+                    AddOrDeleteLike.Parameters.AddWithValue("@photoId", photoId);
+                    AddOrDeleteLike.Parameters.AddWithValue("@userId", userId);
+                    AddOrDeleteLike.ExecuteReader();
                 }
                 else
                 {
-                    cmd = new SqlCommand("INSERT likes (photoId, userId) VALUES (@photoId, @userId)", conn);
-                    cmd.Parameters.AddWithValue("@photoId", photoId);
-                    cmd.Parameters.AddWithValue("@userId", userId);
-                    cmd.ExecuteReader();
+                    AddOrDeleteLike = new SqlCommand("INSERT likes (photoId, userId) VALUES (@photoId, @userId)", conn);
+                    AddOrDeleteLike.Parameters.AddWithValue("@photoId", photoId);
+                    AddOrDeleteLike.Parameters.AddWithValue("@userId", userId);
+                    AddOrDeleteLike.ExecuteReader();
                 }
 
-                SqlCommand cmmd = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
-                cmmd.Parameters.AddWithValue("@photoId", photoId);
-                cmmd.Parameters.AddWithValue("@userId", userId);
+                SqlCommand TotalLikes = new SqlCommand("SELECT COUNT(*) FROM likes WHERE photoId = @photoId", conn);
+                TotalLikes.Parameters.AddWithValue("@photoId", photoId);
+                TotalLikes.Parameters.AddWithValue("@userId", userId);
+                output.TotalLikes = Convert.ToInt32(TotalLikes.ExecuteScalar());
 
-                output.TotalLikes = Convert.ToInt32(cmmd.ExecuteScalar());
                 output.PhotoId = photoId;
-                SqlCommand commd = new SqlCommand("SELECT* FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
-                commd.Parameters.AddWithValue("@photoId", photoId);
-                commd.Parameters.AddWithValue("@userId", userId);
-                output.Liked = Convert.ToBoolean(cmmd.ExecuteScalar());
+
+                SqlCommand Liked = new SqlCommand("SELECT * FROM likes WHERE photoId = @photoId and userId = @userId) THEN 1 ELSE 0 END", conn);
+                Liked.Parameters.AddWithValue("@photoId", photoId);
+                Liked.Parameters.AddWithValue("@userId", userId);
+                output.Liked = Convert.ToBoolean(TotalLikes.ExecuteScalar());
 
 
                 return output;
