@@ -68,6 +68,41 @@ namespace SampleApi.Controllers
             return Ok(token);
         }
 
+        /// <summary>
+        /// allow a user to update their username
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("update-username")]
+        public IActionResult UpdateUsername(User user)
+        {
+            
+            if (userDao.GetUser(user.Username) != null)
+            {
+                return BadRequest(new
+                {
+                    Message = "Username has already been taken."
+                });
+            }
+            else
+            {                                
+                userDao.UpdateUsername(user);
+                
+                return Ok(new {
+                    Message = "Username updated successfully!"
+                });
+            }
+        }
+
+        [HttpPost("update-password")]
+        public IActionResult UpdatePassword(User user, string desiredPassword)
+        {
+            
+            return Ok(new {
+                Message = "Password updated successfully!"
+            });
+        }
+
 
         /// <summary>
         /// Authenticates the user and provides a bearer token.
@@ -93,6 +128,33 @@ namespace SampleApi.Controllers
                 result = Ok(token);
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Allows a user to "deactivate" their account
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("delete")]
+        public IActionResult DeactivateAccount(AuthenticationModel model)
+        {
+            // Assume the user is not authorized
+            IActionResult result = Unauthorized();
+
+            // Get the user by username
+            var user = userDao.GetUser(model.Username);
+
+            // If we found a user and the password has matches
+            if (user != null && passwordHasher.VerifyHashMatch(user.Password, model.Password, user.Salt))
+            {
+                userDao.DeleteUser(user);
+                // Generate a token
+                var token = tokenGenerator.GenerateToken(user.Username, user.Role);
+
+                // Return the token
+                result = Ok(token);
+            }
             return result;
         }
     }

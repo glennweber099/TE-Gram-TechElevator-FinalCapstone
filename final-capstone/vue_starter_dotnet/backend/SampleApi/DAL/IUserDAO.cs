@@ -25,11 +25,12 @@ namespace SampleApi.DAL
         void CreateUser(User user);
 
         /// <summary>
-        /// Updates a user.
+        /// Updates a username
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(User user);
+        void UpdateUsername(User user);
 
+        
         /// <summary>
         /// Deletes a user from the system.
         /// </summary>
