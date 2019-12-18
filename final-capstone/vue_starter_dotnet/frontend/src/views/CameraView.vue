@@ -1,7 +1,7 @@
 <template>
-<div>
-  <button v-on:click="setupWidget" id="upload_widget" class="cloudinary-button">Upload files</button> 
-<form id="post-form" v-on:submit.prevent="sharePhoto">
+  <div>
+    <button v-on:click="setupWidget" id="upload_widget" class="cloudinary-button">Upload files</button>
+    <form id="post-form" v-on:submit.prevent="sharePhoto">
       <input
         type="text"
         name="caption"
@@ -15,43 +15,56 @@
         <router-link to="/" tag="button" id="go-back">Go Back</router-link>
       </div>
     </form>
-</div>
+  </div>
 </template>
 <script>
 import auth from "../auth.js";
 export default {
   data() {
-    return{
+    return {
       post: {
         imageUrl: "",
         caption: ""
       }
-    }
+    };
   },
-  mounted () {
-    let widgetScript = document.createElement('script');
-    widgetScript.setAttribute('src', "https://widget.cloudinary.com/v2.0/global/all.js");
-    widgetScript.setAttribute('type', "text/javascript");
+  mounted() {
+    let widgetScript = document.createElement("script");
+    widgetScript.setAttribute(
+      "src",
+      "https://widget.cloudinary.com/v2.0/global/all.js"
+    );
+    widgetScript.setAttribute("type", "text/javascript");
     document.head.appendChild(widgetScript);
   },
   methods: {
-    setupWidget(){
-    var myWidget = cloudinary.createUploadWidget({
-    cloudName: 'tech-elevator', 
-    apiKey: '714725446462368',
-    uploadPreset: 'vg8sew4g'}, (error, result) => { 
-      if (!error && result && result.event === "success") {
-        console.log('Done! Here is the image info: ', result.info.secure_url);
-        this.post.imageUrl = result.info.secure_url
-    }
-  }
-)
+    setupWidget() {
+      var myWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: "tech-elevator",
+          apiKey: "714725446462368",
+          uploadPreset: "vg8sew4g"
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            console.log(
+              "Done! Here is the image info: ",
+              result.info.secure_url
+            );
+            this.post.imageUrl = result.info.secure_url;
+          }
+        }
+      );
 
-document.getElementById("upload_widget").addEventListener("click", function(){
-    myWidget.open();
-  }, false);
+      document.getElementById("upload_widget").addEventListener(
+        "click",
+        function() {
+          myWidget.open();
+        },
+        false
+      );
     },
-  sharePhoto() {
+    sharePhoto() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/photo/upload`, {
         method: "POST",
         headers: {
@@ -70,26 +83,26 @@ document.getElementById("upload_widget").addEventListener("click", function(){
         });
     }
   }
-}
+};
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap");
 
 #upload-header {
-  font-family: 'Pacifico', cursive; 
+  font-family: "Pacifico", cursive;
   font-size: 3em;
   text-align: center;
 }
 
 #share {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
   margin-top: 10px;
   width: 100px;
 }
 
 #go-back {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
   margin-top: 10px;
   width: 100px;
