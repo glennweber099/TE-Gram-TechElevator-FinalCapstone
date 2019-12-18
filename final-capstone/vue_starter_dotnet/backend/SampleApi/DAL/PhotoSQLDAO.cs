@@ -251,17 +251,6 @@ namespace SampleApi.DAL
 
             return deepPhoto;
         }
-
-        //public List<Photo> GetPhotosByUser(int userId)
-        //{
-        //    return null;
-        //}
-
-        //// TBD if we want to show a photo detail page that scrolls when a single photo is selected OR just the photo that was selected
-
-        //public Photo GetPhoto(int photoId)
-        //{
-        //    return null;
-        //}
+        
     }
 }
