@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "blob-util": "^2.0.2",
+    "cloudinary": "^1.18.1",
+    "cloudinary-vue": "^1.0.0",
     "core-js": "^2.6.5",
     "csvjson-json_beautifier": "^5.0.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-script2": "^2.1.0",
     "vue2-dropzone": "^3.6.0"
   },
   "devDependencies": {
