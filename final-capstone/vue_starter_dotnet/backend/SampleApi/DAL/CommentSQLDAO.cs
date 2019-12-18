@@ -102,22 +102,38 @@ namespace SampleApi.DAL
             return topComment;
         }
         /// <summary>
-        /// A method to allow a user to add a comment
+        /// A method that allows a user to add a comment to a photo
         /// </summary>
         /// <param name="comment"></param>
-        public void AddAComment(Comment comment)
+        /// <param name="photoId"></param>
+        public List<Comment> AddAComment(string comment, int photoId, int commenterId)
         {
+            List<Comment> comments = new List<Comment>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId)", conn);
-                    command.Parameters.AddWithValue("@comment", comment.CommentString);
-                    command.Parameters.AddWithValue("@photoId", comment.PhotoId);
-                    command.Parameters.AddWithValue("@commenterId", comment.CommenterId);
-                    command.ExecuteNonQuery();
+                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId) select * from comments left join users on comments.commenterId = users.id where photoId = @photoId", conn);
+                    command.Parameters.AddWithValue("@comment", comment);
+                    command.Parameters.AddWithValue("@photoId", photoId);
+                    command.Parameters.AddWithValue("@commenterId", commenterId);
+                    SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Comment acomment = new Comment();
+                            {
+                                acomment.CommentString = Convert.ToString(reader["comment"]);
+                                acomment.Id = (Convert.ToInt32(reader["id"]));
+                                acomment.PhotoId = (Convert.ToInt32(reader["photoId"]));
+                                acomment.CommenterId = Convert.ToInt32(reader["commenterId"]);
+                                acomment.DateCommented = Convert.ToDateTime(reader["dateCommented"]);
+                                acomment.CommenterName = Convert.ToString(reader["username"]);
+                            };
+                            comments.Add(acomment);
+                        }
                 }
+                return comments;
             }
             catch (SqlException)
             {

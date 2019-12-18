@@ -85,7 +85,7 @@ namespace SampleApi
             services.AddTransient<IPhotoDAO>(m => new PhotoSQLDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<ILikeDAO>(m => new LikeSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IFavoriteDAO>(m => new FavoriteSQLDAO(Configuration.GetConnectionString("Default")));
-
+            services.AddTransient<ICommentDAO>(m => new CommentSQLDAO(Configuration.GetConnectionString("Default")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

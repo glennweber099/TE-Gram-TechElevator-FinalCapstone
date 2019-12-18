@@ -30,7 +30,7 @@ namespace SampleApi.DAL
         /// <summary>
         /// Get all photo details by Id
         /// </summary>
-        DeepPhoto GetDeepPhotoById(int id);
+        DeepPhoto GetDeepPhotoById(int id, int userId);
         /// <summary>
         /// Queries the database and retrieves all photos that have been uploaded by the given user
         /// </summary>

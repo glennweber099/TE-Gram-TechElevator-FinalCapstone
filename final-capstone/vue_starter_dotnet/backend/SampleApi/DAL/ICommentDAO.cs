@@ -22,9 +22,10 @@ namespace SampleApi.DAL
         /// <param name="photoId"></param>
         Comment GetMostRecentCommentByPhotoId(int photoId);
         /// <summary>
-        /// A method that allows a user to add a comment
+        /// A method that allows a user to add a comment to a photo
         /// </summary>
-        /// <param name="Comment"></param>
-        void AddAComment(Comment Comment);
+        /// <param name="comment"></param>
+        /// <param name="photoId"></param>
+        List<Comment> AddAComment(string comment, int photoId, int commenterId);
     }
 }

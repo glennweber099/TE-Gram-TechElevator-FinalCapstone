@@ -20,6 +20,7 @@ namespace SampleApi.Controllers
     {
         private IPhotoDAO photoDAO;
         private IUserDAO userDAO;
+        private ICommentDAO commentDAO;
 
         /// <summary>
         /// 
@@ -27,10 +28,11 @@ namespace SampleApi.Controllers
         /// </summary>
         /// <param name="dao"></param>
         /// <param name="udao"></param>
-        public PhotoController(IPhotoDAO dao, IUserDAO udao)
+        public PhotoController(IPhotoDAO dao, IUserDAO udao, ICommentDAO cdao)
         {
             this.photoDAO = dao;
             this.userDAO = udao;
+            this.commentDAO = cdao;
         }
 
         /// <summary>
@@ -97,11 +99,33 @@ namespace SampleApi.Controllers
             });
         }
 
+        /// <summary>
+        /// Get's all the details and comments of a photo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("detail/{id}")]
-        public IActionResult GetPhotoById(int id)
+        public IActionResult GetPhotoById(int id, int userId)
         {
-            DeepPhoto photo = photoDAO.GetDeepPhotoById(id);
+            User user = userDAO.GetUser(User.Identity.Name);
+            userId = user.Id;
+            DeepPhoto photo = photoDAO.GetDeepPhotoById(id, userId);
             return Ok(photo);
+        }
+        /// <summary>
+        /// Add a comment to a photo
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <param name="photoId"></param>
+        /// <returns></returns>
+        [HttpPost("comment/{photoId}")]
+        public IActionResult AddAComment(Comment comment, int photoId)
+        {
+            User user = userDAO.GetUser(User.Identity.Name);
+            comment.CommenterId = user.Id;
+            List<Comment> comments = commentDAO.AddAComment(comment.CommentString, photoId, comment.CommenterId);
+            return Ok(comments);
         }
     }
 }

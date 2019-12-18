@@ -23,6 +23,10 @@ namespace SampleApi.Models
         /// </summary>
         public int PhotoId { get; set; }
         /// <summary>
+        /// Name of person who commented on the photo
+        /// </summary>
+        public string CommenterName { get; set; }
+        /// <summary>
         /// The id of the user who left the comment
         /// </summary>
         public int CommenterId { get; set; }

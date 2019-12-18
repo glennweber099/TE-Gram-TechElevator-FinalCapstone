@@ -11,7 +11,6 @@ namespace SampleApi.Models
     public class DeepPhoto: Photo
     {
         public List<Comment> AllComments { get; set; }
-        public List<Like> AllLikes { get; set; }
 
         public DeepPhoto()
         {
