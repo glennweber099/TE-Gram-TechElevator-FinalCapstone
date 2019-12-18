@@ -174,6 +174,7 @@ export default {
       })
         .then(response => {
           if (response.ok) {
+            this.$router.go();
             return response.json();
           }
         })
