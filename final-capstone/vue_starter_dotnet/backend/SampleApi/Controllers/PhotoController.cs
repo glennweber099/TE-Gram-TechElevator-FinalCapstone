@@ -92,7 +92,7 @@ namespace SampleApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public IActionResult GetPhotoById(int id)
         {
             DeepPhoto photo = photoDAO.GetDeepPhotoById(id);
