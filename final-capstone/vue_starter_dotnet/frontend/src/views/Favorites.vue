@@ -7,22 +7,24 @@
       <div class="center-box">
         <div id="home-header">TE Gram</div>
       </div>
-      <div class="right-nav-box">
-        <div class="right-nav-top-row">
-        <router-link :to="{ name: 'upload' }">
-          <button class="upload-photo">Upload Photo</button>
-        </router-link>
-        <router-link :to="{ name: 'camera'}">
-          <button class="take-photo">Take Photo</button>
-        </router-link>
-        </div>
-        <div class="right-nav-bottom-row">
-        <button v-on:click="logout" id="logout-button">Logout</button>
-        <router-link to="/" tag="button" id="go-back">Go Back</router-link>
+        <div class="right-nav-box">
+          <div class="right-nav-column">
+          <router-link :to="{ name: 'upload' }">
+            <button class="upload-photo">Upload Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'camera'}">
+            <button class="take-photo">Take Photo</button>
+          </router-link>
+          <button v-on:click="logout" id="logout-button">Logout</button>
         </div>
       </div>
     </div>
+    <div class="back-button"> 
+      <router-link to="/" tag="button" id="go-back">Go Back</router-link>
+    </div>
+    <div class="favorites-header">Favorites</div>
     <div class="container">
+  
       <div class="images" v-for="photo in photos" v-bind:key="photo.id">
         <div class="item">
           <img v-bind:src="photo.imageUrl" id="photo-url"/>
@@ -150,25 +152,29 @@ export default {
 
 .right-nav-box {
   display: flex;
-  flex-direction: column;
-  align-self: center;
+  flex-direction: row;
   justify-content: flex-end;
+  align-self: center;
   margin-right: 0;
   width: 33%;
 }
-/* 
-.right-nav-top-row {
+
+.right-nav-column {
+  display: flex;
+  flex-direction: column;
   justify-content: flex-end;
 }
-
-.right-nav-bottom-row {
-  justify-content: flex-end;
-} */
 
 #home-header {
   font-family: "Pacifico", cursive;
   font-size: 4em;
-  align-content: center;
+   align-content: center;
+}
+
+.favorites-header {
+  font-family: 'Girassol', cursive;
+  font-size: 3em;
+  text-align: center;
 }
 
 #tegram-logo {
@@ -179,25 +185,34 @@ export default {
 .upload-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
-  width: 25%;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1);    
 }
 
 .take-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
-  width: 25%;
+  width: 125px;
+  border-radius: 15px;
+  background-color: rgba(235,164,73,1); 
 }
 
 #logout-button {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
-  width: 25%;
+  width: 125px;
+  border-radius: 15px;
+  background-color: rgba(235,164,73,1); 
 }
 
 #go-back {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
-  width: 25%;
+  width: 125px;
+  border-radius: 15px;
+  background-color: rgba(252,236,138,1);
+  margin-left: 10px; 
 }
 
 #photo-owner {

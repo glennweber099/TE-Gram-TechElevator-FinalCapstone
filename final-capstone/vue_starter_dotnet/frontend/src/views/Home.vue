@@ -8,16 +8,18 @@
         <div id="home-header">TE Gram</div>
       </div>
       <div class="right-nav-box">
-        <router-link :to="{ name: 'upload' }">
-          <button class="upload-photo-link">Upload a Photo</button>
-        </router-link>
-        <router-link :to="{ name: 'favorites' }">
-          <button class="upload-photo-link">View All Favorites</button>
-        </router-link>
-        <button v-on:click="logout" id="logout-button">Click to Logout</button>
-        <router-link :to="{ name: 'camera'}">
-          <button class="upload-photo-link">Take a Photo</button>
-        </router-link>
+        <div class="right-nav-column">
+          <router-link :to="{ name: 'upload' }">
+            <button class="upload-photo">Upload Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'camera'}">
+            <button class="take-photo">Take Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'favorites' }">
+            <button class="view-favorites">View Favorites</button>
+          </router-link>
+          <button v-on:click="logout" id="logout-button">Logout</button>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -25,17 +27,23 @@
         <div class="item">
           <router-link id="photo-url" v-bind:to="{name:'detail', params: { photoId: photo.id}}"><img v-bind:src="photo.imageUrl" id="photo-url" style="margin: 0; width: 100%;"/></router-link>
          <div class="button-container">
-          <div class="button-item-like" v-if="photo.IsLikedByUser == true">
-            <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
-          </div>
-          <div v-else class="button-item-like">
-            <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
-          </div>
-          <div class="button-item-favorite" v-if="photo.isFavoritedByUser == true">
-            <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
-          </div>
-          <div class="button-item-favorite" v-else>
-            <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+            <div class="button-item">
+              <div class="button-item-like">
+                <div class="like" v-if="photo.IsLikedByUser == true">
+                  <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
+                </div>
+                <div v-else class="button-item-like">
+                  <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
+                </div>
+              </div>
+              <div class="button-item-favorite">
+                <div class="favorite" v-if="photo.isFavoritedByUser == true">
+                  <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
+                </div>
+                <div class="button-item-favorite" v-else>
+                  <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+                </div>
+              </div>
           </div>
         </div>
           <p id="likes" v-if="photo.totalLikes > 1">
@@ -160,8 +168,7 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap");
-
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Londrina+Outline|Pacifico|Solway&display=swap');
 .home-nav-container {
   display: flex;
   flex-direction: row;
@@ -186,30 +193,60 @@ export default {
 
 .right-nav-box {
   display: flex;
-  align-self: center;
+  flex-direction: row;
   justify-content: flex-end;
+  align-self: center;
   margin-right: 0;
   width: 33%;
 }
 
-#home-header {
+.right-nav-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#home-header {  
   font-family: "Pacifico", cursive;
   font-size: 4em;
   align-content: center;
 }
+
 #tegram-logo {
   align-self: center;
   width: 150px;
 }
 
-.upload-photo-link {
+.upload-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.take-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.view-favorites {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #logout-button {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #photo-owner {
@@ -271,19 +308,23 @@ export default {
 
 .button-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
+.button-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "like favorite";
+}   
+
 .button-item-like {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  grid-area: like;
+  justify-self: left;
 }
 
 .button-item-favorite {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  grid-area: favorite;
+  justify-self: right;
 }
 </style> 
 

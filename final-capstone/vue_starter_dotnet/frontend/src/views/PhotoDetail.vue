@@ -8,40 +8,44 @@
         <div id="home-header">TE Gram</div>
       </div>
       <div class="right-nav-box">
-        <router-link :to="{ name: 'upload' }">
-          <button class="upload-photo-link">Upload a Photo</button>
-        </router-link>
-        <router-link :to="{ name: 'favorites' }">
-          <button class="upload-photo-link">View All Favorites</button>
-        </router-link>
-        <button v-on:click="logout" id="logout-button">Click to Logout</button>
-        <router-link :to="{ name: 'camera'}">
-          <button class="upload-photo-link">Take a Photo</button>
-        </router-link>
-        <router-link to="/" tag="button" id="go-back">Go Back</router-link>
+        <div class="right-nav-column">
+          <router-link :to="{ name: 'upload' }">
+            <button class="upload-photo">Upload Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'camera'}">
+            <button class="take-photo">Take Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'favorites' }">
+            <button class="view-favorites">View Favorites</button>
+          </router-link>
+          <button v-on:click="logout" id="logout-button">Logout</button>
+        </div>
       </div>
     </div>
+    <router-link to="/" tag="button" id="go-back">Go Back</router-link>
     <div class="container">
         <div class="item">
           <img v-bind:src="photo.ImageUrl" id="photo-url"/>
-          <p v-if="photo.IsLikedByUser == true">
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">❤</span>
-          </p>
-          <p v-else>
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">♡</span>
-          </p>
-          <p id="likes" v-if="photo.totalLikes > 1">
-            <span>{{photo.totalLikes}} likes</span>
-          </p>
-          <p id="likes" v-if="photo.totalLikes == 1">
-            <span>{{photo.totalLikes}} like</span>
-          </p>
-          <p v-if="photo.isFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⚜</span>
-          </p>
-          <p v-else>
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
-          </p>
+         <div class="button-container">
+            <div class="button-item">
+              <div class="button-item-like">
+                <div class="like" v-if="photo.IsLikedByUser == true">
+                  <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
+                </div>
+                <div v-else class="button-item-like">
+                  <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
+                </div>
+              </div>
+              <div class="button-item-favorite">
+                <div class="favorite" v-if="photo.isFavoritedByUser == true">
+                  <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
+                </div>
+                <div class="button-item-favorite" v-else>
+                  <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+                </div>
+              </div>
+          </div>
+        </div>
           <p>
             <span id="photo-owner">{{photo.photoOwner}}</span>
             <span id="photo-caption"> {{photo.caption}}</span>
@@ -54,11 +58,13 @@
         </div>
       </div>
         <form v-on:submit.prevent="submit">
-          <div class="container"> 
-            <input type="text" placeholder="Enter Comment" v-model="comment.commentString">
+          <div> 
+            <input class="comment-box" style="text-align: center;" type="text" placeholder="Enter Comment" v-model="comment.commentString">
           </div>
-        <button type="submit">Post Comment</button>
-      </form>
+          <div class="comment-submit">
+          <button style="text-align: center;" type="submit">Post Comment</button>
+          </div>
+        </form>
       </div>
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
@@ -69,7 +75,7 @@
     if the user were to click the home button, they would still be able to see the page you can only see if you were logged in as that user
     There is an "auth.destroyToken(token)" which takes a token (opposite of what was used in Login.vue Line 81)
     but you need the token in order to do that and I am not sure how to access that token from here-->
-  </div>
+    </div>
 </template>
 
 <script>
@@ -213,7 +219,6 @@ export default {
         this.photo.photoOwner = text.photoOwner;
         this.photo.caption = text.caption;
         this.photo.comments = text.allComments;
-
       });
   }
 };
@@ -246,10 +251,17 @@ export default {
 
 .right-nav-box {
   display: flex;
-  align-self: center;
+  flex-direction: row;
   justify-content: flex-end;
+  align-self: center;
   margin-right: 0;
   width: 33%;
+}
+
+.right-nav-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 #home-header {
@@ -262,14 +274,45 @@ export default {
   width: 150px;
 }
 
-.upload-photo-link {
+.upload-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1);    
 }
 
 #logout-button {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1);    
+}
+
+.take-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.view-favorites {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+#go-back {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color: rgba(252,236,138,1);
+  margin-left: 10px;  
 }
 
 #photo-owner {
@@ -308,9 +351,62 @@ export default {
   margin: 0;
 }
 
-.heart-logo {
+.not-liked-logo {
   font-size: 2em;
   margin-bottom: 5px;
+}
+
+.liked-logo {
+  font-size: 1.4em;
+  margin-bottom: 5px;
+}
+
+.favorited-logo {
+  font-size: 1.3em;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.not-favorited-logo {
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "like favorite";
+}   
+
+.button-item-like {
+  grid-area: like;
+  justify-self: left;
+}
+
+.button-item-favorite {
+  grid-area: favorite;
+  justify-self: right;
+}
+
+.comment-box {
+  width: 500px;
+  height: 75px;
+  margin-top: 10px;
+  align-self: center;
+}
+
+.comment-submit {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  align-self: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style> 
 
