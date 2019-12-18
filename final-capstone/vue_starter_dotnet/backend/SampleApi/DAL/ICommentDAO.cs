@@ -26,6 +26,6 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="comment"></param>
         /// <param name="photoId"></param>
-        void AddAComment(string comment, int photoId, int commenterId);
+        List<Comment> AddAComment(string comment, int photoId, int commenterId);
     }
 }

@@ -124,8 +124,8 @@ namespace SampleApi.Controllers
         {
             User user = userDAO.GetUser(User.Identity.Name);
             comment.CommenterId = user.Id;
-            commentDAO.AddAComment(comment.CommentString, photoId, comment.CommenterId);
-            return Ok();
+            List<Comment> comments = commentDAO.AddAComment(comment.CommentString, photoId, comment.CommenterId);
+            return Ok(comments);
         }
     }
 }

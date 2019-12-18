@@ -130,7 +130,7 @@ export default {
             if (this.photo.id === photoId) {
               this.photo.totalLikes = text.totalLikes;
               this.photo.IsLikedByUser = text.liked;
-         };
+         }
         })
         .then(err => console.error(err));
     },
@@ -155,7 +155,7 @@ export default {
         .then(text => {
             if (this.photo.id === photoId) {
               this.photo.isFavoritedByUser = text.favorited;
-            };
+            }
           })
         .then(err => console.error(err));
       },
@@ -174,9 +174,13 @@ export default {
       })
         .then(response => {
           if (response.ok) {
-            this.$router.go();
+            // this.$router.go();
             return response.json();
           }
+        })
+        .then(text => {
+          this.photo.comments = text;
+          this.comment.commentString = '';
         })
         .then(err => console.error(err));
       },

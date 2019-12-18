@@ -106,19 +106,34 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="comment"></param>
         /// <param name="photoId"></param>
-        public void AddAComment(string comment, int photoId, int commenterId)
+        public List<Comment> AddAComment(string comment, int photoId, int commenterId)
         {
+            List<Comment> comments = new List<Comment>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId)", conn);
+                    SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId) select * from comments left join users on comments.commenterId = users.id where photoId = @photoId", conn);
                     command.Parameters.AddWithValue("@comment", comment);
                     command.Parameters.AddWithValue("@photoId", photoId);
                     command.Parameters.AddWithValue("@commenterId", commenterId);
-                    command.ExecuteNonQuery();
+                    SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Comment acomment = new Comment();
+                            {
+                                acomment.CommentString = Convert.ToString(reader["comment"]);
+                                acomment.Id = (Convert.ToInt32(reader["id"]));
+                                acomment.PhotoId = (Convert.ToInt32(reader["photoId"]));
+                                acomment.CommenterId = Convert.ToInt32(reader["commenterId"]);
+                                acomment.DateCommented = Convert.ToDateTime(reader["dateCommented"]);
+                                acomment.CommenterName = Convert.ToString(reader["username"]);
+                            };
+                            comments.Add(acomment);
+                        }
                 }
+                return comments;
             }
             catch (SqlException)
             {
