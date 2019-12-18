@@ -8,16 +8,18 @@
         <div id="home-header">TE Gram</div>
       </div>
       <div class="right-nav-box">
-        <router-link :to="{ name: 'upload' }">
-          <button class="upload-photo-link">Upload a Photo</button>
-        </router-link>
-        <router-link :to="{ name: 'favorites' }">
-          <button class="upload-photo-link">View All Favorites</button>
-        </router-link>
-        <button v-on:click="logout" id="logout-button">Click to Logout</button>
-        <router-link :to="{ name: 'camera'}">
-          <button class="upload-photo-link">Take a Photo</button>
-        </router-link>
+        <div class="right-nav-column">
+          <router-link :to="{ name: 'upload' }">
+            <button class="upload-photo">Upload Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'camera'}">
+            <button class="take-photo">Take Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'favorites' }">
+            <button class="view-favorites">View Favorites</button>
+          </router-link>
+          <button v-on:click="logout" id="logout-button">Logout</button>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -160,8 +162,7 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap");
-
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Londrina+Outline|Pacifico|Solway&display=swap');
 .home-nav-container {
   display: flex;
   flex-direction: row;
@@ -186,30 +187,60 @@ export default {
 
 .right-nav-box {
   display: flex;
-  align-self: center;
+  flex-direction: row;
   justify-content: flex-end;
+  align-self: center;
   margin-right: 0;
   width: 33%;
 }
 
-#home-header {
+.right-nav-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#home-header {  
   font-family: "Pacifico", cursive;
   font-size: 4em;
   align-content: center;
 }
+
 #tegram-logo {
   align-self: center;
   width: 150px;
 }
 
-.upload-photo-link {
+.upload-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.take-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.view-favorites {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #logout-button {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #photo-owner {
