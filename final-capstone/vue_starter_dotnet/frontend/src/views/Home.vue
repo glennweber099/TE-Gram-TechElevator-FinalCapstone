@@ -27,17 +27,23 @@
         <div class="item">
           <router-link id="photo-url" v-bind:to="{name:'detail', params: { photoId: photo.id}}"><img v-bind:src="photo.imageUrl" id="photo-url" style="margin: 0; width: 100%;"/></router-link>
          <div class="button-container">
-          <div class="button-item-like" v-if="photo.IsLikedByUser == true">
-            <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
-          </div>
-          <div v-else class="button-item-like">
-            <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
-          </div>
-          <div class="button-item-favorite" v-if="photo.isFavoritedByUser == true">
-            <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
-          </div>
-          <div class="button-item-favorite" v-else>
-            <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+            <div class="button-item">
+              <div class="button-item-like">
+                <div class="like" v-if="photo.IsLikedByUser == true">
+                  <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>
+                </div>
+                <div v-else class="button-item-like">
+                  <div class="not-liked-logo" v-on:click="toggleLike(photo.id)">♡</div>
+                </div>
+              </div>
+              <div class="button-item-favorite">
+                <div class="favorite" v-if="photo.isFavoritedByUser == true">
+                  <div class="favorited-logo" v-on:click="toggleFavorite(photo.id)">⭐</div>
+                </div>
+                <div class="button-item-favorite" v-else>
+                  <div class="not-favorited-logo" v-on:click="toggleFavorite(photo.id)">☆</div>
+                </div>
+              </div>
           </div>
         </div>
           <p id="likes" v-if="photo.totalLikes > 1">
@@ -302,19 +308,23 @@ export default {
 
 .button-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
+.button-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "like favorite";
+}   
+
 .button-item-like {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  grid-area: like;
+  justify-self: left;
 }
 
 .button-item-favorite {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  grid-area: favorite;
+  justify-self: right;
 }
 </style> 
 

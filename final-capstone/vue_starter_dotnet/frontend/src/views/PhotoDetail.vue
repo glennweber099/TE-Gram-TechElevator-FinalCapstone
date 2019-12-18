@@ -58,11 +58,13 @@
         </div>
       </div>
         <form v-on:submit.prevent="submit">
-          <div class="container"> 
-            <input type="text" placeholder="Enter Comment" v-model="comment.commentString">
+          <div> 
+            <input class="comment-box" style="text-align: center;" type="text" placeholder="Enter Comment" v-model="comment.commentString">
           </div>
-        <button type="submit">Post Comment</button>
-      </form>
+          <div class="comment-submit">
+          <button style="text-align: center;" type="submit">Post Comment</button>
+          </div>
+        </form>
       </div>
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
@@ -73,7 +75,7 @@
     if the user were to click the home button, they would still be able to see the page you can only see if you were logged in as that user
     There is an "auth.destroyToken(token)" which takes a token (opposite of what was used in Login.vue Line 81)
     but you need the token in order to do that and I am not sure how to access that token from here-->
-  </div>
+    </div>
 </template>
 
 <script>
@@ -217,7 +219,6 @@ export default {
         this.photo.photoOwner = text.photoOwner;
         this.photo.caption = text.caption;
         this.photo.comments = text.allComments;
-
       });
   }
 };
@@ -390,6 +391,22 @@ export default {
 .button-item-favorite {
   grid-area: favorite;
   justify-self: right;
+}
+
+.comment-box {
+  width: 500px;
+  height: 75px;
+  margin-top: 10px;
+  align-self: center;
+}
+
+.comment-submit {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  align-self: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style> 
 
