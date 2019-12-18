@@ -30,7 +30,12 @@ namespace SampleApi.DAL
         /// <param name="user"></param>
         void UpdateUsername(User user);
 
-        
+        /// <summary>
+        /// Updates a password
+        /// </summary>
+        /// <param name="user"></param>
+        void UpdatePassword(User user);
+
         /// <summary>
         /// Deletes a user from the system.
         /// </summary>
