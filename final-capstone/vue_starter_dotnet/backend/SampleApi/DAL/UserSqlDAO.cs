@@ -134,7 +134,32 @@ namespace SampleApi.DAL
             }
         }
 
-       
+        /// <summary>
+        /// updates a password
+        /// </summary>
+        /// <param name="user"></param>
+        public void UpdatePassword(User user)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE users SET password = @password, salt = @salt WHERE id = @id;", conn);
+                    cmd.Parameters.AddWithValue("@password", user.Password);
+                    cmd.Parameters.AddWithValue("@salt", user.Salt);
+                    cmd.Parameters.AddWithValue("@id", user.Id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
 
         private User MapRowToUser(SqlDataReader reader)
         {

@@ -42,13 +42,5 @@ namespace SampleApi.Models
 
         public string Email { get; set; }
 
-        /// <summary>
-        /// A method to change the password
-        /// </summary>
-        /// <param name="desiredPassword"></param>
-        public void ChangePassword(string desiredPassword)
-        {
-            Password = desiredPassword;
-        }
     }
 }

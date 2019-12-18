@@ -94,10 +94,18 @@ namespace SampleApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Allows the user to update their password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("update-password")]
-        public IActionResult UpdatePassword(User user, string desiredPassword)
+        public IActionResult UpdatePassword(User user)
         {
-            
+            var passwordHash = passwordHasher.ComputeHash(user.Password);
+            User updatedUser = new User { Password = passwordHash.Password, Salt = passwordHash.Salt, Role = "User", Username = user.Username, Email = user.Email, Id = user.Id };
+            userDao.UpdatePassword(updatedUser);
+
             return Ok(new {
                 Message = "Password updated successfully!"
             });
