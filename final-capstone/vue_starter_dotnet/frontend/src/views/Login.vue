@@ -2,11 +2,11 @@
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal" id="login-header">Welcome to TE-Gram</h1>
-      <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
-       <strong> Invalid username and password! </strong>
+      <div id="invalid-credentials" class="alert alert-danger" role="alert" v-if="invalidCredentials">
+       Invalid username and password!
       </div>
-      <div class="alert alert-success" role="alert" v-if="this.$route.query.registration">
-        <strong> Thank you for registering, please sign in. </strong>
+      <div id="success-registering" class="alert alert-success" role="alert" v-if="this.$route.query.registration">
+        Thank you for registering! Please sign in.
       </div>
           <p>
             <label for="username" class="sr-only" style="font-family: 'Girassol', cursive; font-size: 1.5em; margin-right: 5px;"><strong>Username:  </strong></label>
@@ -112,5 +112,19 @@ export default {
   font-family: 'Archivo Narrow', sans-serif;
   font-size: 1em;
   font-weight: bold;
+}
+
+#success-registering {
+  font-weight: bolder;
+  font-size: 1.3em;
+  color:orangered;
+  font-family: 'Solway', serif;
+}
+
+#invalid-credentials {
+  font-weight: bolder;
+  font-size: 1.3em;
+  color: red;
+  font-family: 'Solway', serif;
 }
 </style>

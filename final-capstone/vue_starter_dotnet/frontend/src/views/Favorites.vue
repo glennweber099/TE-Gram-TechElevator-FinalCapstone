@@ -8,14 +8,18 @@
         <div id="home-header">TE Gram</div>
       </div>
       <div class="right-nav-box">
+        <div class="right-nav-top-row">
         <router-link :to="{ name: 'upload' }">
-          <button class="upload-photo-link">Upload a Photo</button>
+          <button class="upload-photo">Upload Photo</button>
         </router-link>
-        <button v-on:click="logout" id="logout-button">Click to Logout</button>
         <router-link :to="{ name: 'camera'}">
-          <button class="upload-photo-link">Take a Photo</button>
+          <button class="take-photo">Take Photo</button>
         </router-link>
+        </div>
+        <div class="right-nav-bottom-row">
+        <button v-on:click="logout" id="logout-button">Logout</button>
         <router-link to="/" tag="button" id="go-back">Go Back</router-link>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -146,30 +150,54 @@ export default {
 
 .right-nav-box {
   display: flex;
+  flex-direction: column;
   align-self: center;
   justify-content: flex-end;
   margin-right: 0;
   width: 33%;
 }
+/* 
+.right-nav-top-row {
+  justify-content: flex-end;
+}
+
+.right-nav-bottom-row {
+  justify-content: flex-end;
+} */
 
 #home-header {
   font-family: "Pacifico", cursive;
   font-size: 4em;
   align-content: center;
 }
+
 #tegram-logo {
   align-self: center;
   width: 150px;
 }
 
-.upload-photo-link {
+.upload-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 25%;
+}
+
+.take-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 25%;
 }
 
 #logout-button {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
+  width: 25%;
+}
+
+#go-back {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 25%;
 }
 
 #photo-owner {
@@ -181,36 +209,21 @@ export default {
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-}
-
-.item {
   padding: 50px;
   margin: 15px;
   background-color: rgba(255, 255, 255, 0.7);
-  width: 600px;
   border-radius: 10px;
+  justify-content: center;
 }
 
 .item > img {
-  margin: 0;
-  width: 100%;
-}
+  width: 350px;
+  height: 300px;
+  justify-content: center;
 
-.item > #photo-caption {
-  font-family: "Solway", serif;
-}
-
-#likes {
-  font-family: "Solway", serif;
-  font-size: 1.2em;
-  margin: 0;
-}
-
-.heart-logo {
-  font-size: 2em;
-  margin-bottom: 5px;
 }
 </style> 
 
