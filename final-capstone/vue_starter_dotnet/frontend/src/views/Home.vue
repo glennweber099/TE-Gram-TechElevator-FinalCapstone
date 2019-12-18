@@ -23,7 +23,7 @@
     <div class="container">
       <div class="images" v-for="photo in photos" v-bind:key="photo.id">
         <div class="item">
-          <router-link id="photo-url" v-bind:to="{name:'detail', params: {photoId: photo.id}}"><img v-bind:src="photo.imageUrl" id="photo-url" style="margin: 0; width: 100%;"/></router-link>
+          <router-link id="photo-url" v-bind:to="{name:'detail', params: { photoId: photo.id}}"><img v-bind:src="photo.imageUrl" id="photo-url" style="margin: 0; width: 100%;"/></router-link>
          <div class="button-container">
           <div class="button-item-like" v-if="photo.IsLikedByUser == true">
             <div class="liked-logo" v-on:click="toggleLike(photo.id)">💗</div>

@@ -18,36 +18,36 @@
         <router-link :to="{ name: 'camera'}">
           <button class="upload-photo-link">Take a Photo</button>
         </router-link>
+        <router-link to="/" tag="button" id="go-back">Go Back</router-link>
       </div>
     </div>
     <div class="container">
         <div class="item">
-          <img v-bind:src="photo.imageUrl" id="photo-url"/>
-          <p v-if="photo.IsLikedByUser == true">
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">❤</span>
+          <img v-bind:src="this.photo.imageUrl" id="photo-url"/>
+          <p v-if="this.photo.IsLikedByUser == true">
+            <span class="heart-logo" v-on:click="toggleLike(this.photo.id)">❤</span>
           </p>
           <p v-else>
-            <span class="heart-logo" v-on:click="toggleLike(photo.id)">♡</span>
+            <span class="heart-logo" v-on:click="toggleLike(this.photo.id)">♡</span>
           </p>
-          <p id="likes" v-if="photo.totalLikes > 1">
-            <span>{{photo.totalLikes}} likes</span>
+          <p id="likes" v-if="this.photo.totalLikes > 1">
+            <span>{{this.photo.totalLikes}} likes</span>
           </p>
           <p id="likes" v-if="photo.totalLikes == 1">
-            <span>{{photo.totalLikes}} like</span>
+            <span>{{this.photo.totalLikes}} like</span>
           </p>
-          <p v-if="photo.isFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⚜</span>
+          <p v-if="this.photo.isFavoritedByUser == true">
+            <span class="heart-logo" v-on:click="toggleFavorite(this.photo.id)">⚜</span>
           </p>
           <p v-else>
-            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
+            <span class="heart-logo" v-on:click="toggleFavorite(this.photo.id)">✖</span>
           </p>
           <p>
-            <span id="photo-owner">{{photo.photoOwner}}</span>
-            <span id="photo-caption"> {{photo.caption}}</span>
+            <span id="photo-owner">{{this.photo.photoOwner}}</span>
+            <span id="photo-caption"> {{this.photo.caption}}</span>
           </p>
         </div>
       </div>
-
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
     replacing the token makes it associated with the user's credidentals that just typed them in
@@ -65,6 +65,19 @@ import auth from "../auth";
 // import { ok } from "assert";
 export default {
   name: "home",
+  data() {
+    return {
+      photo: {
+        id: Number,
+        imageUrl: String,
+        totalLikes: Number,
+        IsLikedByUser: Boolean,
+        isFavoritedByUser: Boolean,
+        photoOwner: Number,
+        caption: String
+      },
+    };
+  },
   methods: {
     logout: function(token) {
       auth.destroyToken(token);
@@ -109,7 +122,7 @@ export default {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.getToken()
         },
-        body: JSON.stringify(favorite)
+        body: json_beautifier(favorite, { dropQuotesOnKeys: true, dropQuotesOnNumbers: true, inlineShortArrays: true})
       })
         .then(response => {
           if (response.ok) {
@@ -126,45 +139,34 @@ export default {
         .then(err => console.error(err));
       }
   },
-  data() {
-    return {
-        // ImageUrl: '',
-        // totalLikes: null,
-        // IsLikedByUser: null,
-        // isFavoritedByUser: null,
-        // photoOwner: '',
-        // caption: '',
-        // photoId: this.$route.params.photoId,
-      photo: [],
-     // comments: []
-    };
-  },
   created() {
-    fetch(`${process.env.VUE_APP_REMOTE_API}/detail/${this.$route.params.photoId}`, {
+    let photoId = this.$route.params.photoId;
+    //Need /photo in this fetch statement to make it work, not sure why though but it took me forever for it to finally work
+    fetch(`${process.env.VUE_APP_REMOTE_API}/photo/detail/${photoId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + auth.getToken(),
 
-        body: JSON.stringify(photo)
+        body: JSON.stringify(this.photo)
       }
     })
         .then(response => {
+          console.log(response)
           if (response.ok) {
             return response.json();
           }
         })
       .then(text => {
         console.log(text);
-        this.photo = text;
-        // photo.ImageUrl = text.ImageUrl;
-        // photo.totalLikes = text.totalLikes;
-        // photo.IsLikedByUser = text.liked;
-        // photo.isFavoritedByUser = text.isFavoritedByUser;
-        // photo.photoOwner = text.photoOwner;
-        // photo.caption = text.caption;
-        // this.comments = text.allComments;
+        this.photo.id = text.id
+        this.photo.ImageUrl = text.imageUrl;
+        this.photo.totalLikes = text.totalLikes;
+        this.photo.IsLikedByUser = text.liked;
+        this.photo.isFavoritedByUser = text.isFavoritedByUser;
+        this.photo.photoOwner = text.photoOwner;
+        this.photo.caption = text.caption;
 
       });
   }

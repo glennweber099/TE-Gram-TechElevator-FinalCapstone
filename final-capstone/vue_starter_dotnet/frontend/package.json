@@ -12,6 +12,7 @@
   "dependencies": {
     "blob-util": "^2.0.2",
     "core-js": "^2.6.5",
+    "csvjson-json_beautifier": "^5.0.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue2-dropzone": "^3.6.0"
