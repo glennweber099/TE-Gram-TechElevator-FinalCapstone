@@ -102,10 +102,11 @@ namespace SampleApi.DAL
             return topComment;
         }
         /// <summary>
-        /// A method to allow a user to add a comment
+        /// A method that allows a user to add a comment to a photo
         /// </summary>
         /// <param name="comment"></param>
-        public void AddAComment(Comment comment)
+        /// <param name="photoId"></param>
+        public void AddAComment(string comment, int photoId, int commenterId)
         {
             try
             {
@@ -113,9 +114,9 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
                     SqlCommand command = new SqlCommand("insert into comments (comment, photoId, commenterId) Values(@comment, @photoId, @commenterId)", conn);
-                    command.Parameters.AddWithValue("@comment", comment.CommentString);
-                    command.Parameters.AddWithValue("@photoId", comment.PhotoId);
-                    command.Parameters.AddWithValue("@commenterId", comment.CommenterId);
+                    command.Parameters.AddWithValue("@comment", comment);
+                    command.Parameters.AddWithValue("@photoId", photoId);
+                    command.Parameters.AddWithValue("@commenterId", commenterId);
                     command.ExecuteNonQuery();
                 }
             }

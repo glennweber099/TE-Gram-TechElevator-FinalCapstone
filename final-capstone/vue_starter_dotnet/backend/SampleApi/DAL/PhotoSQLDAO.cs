@@ -176,7 +176,7 @@ namespace SampleApi.DAL
         /// </summary>
         /// <param name="photo"></param>
         /// <returns></returns>
-        public DeepPhoto GetDeepPhotoById(int id)
+        public DeepPhoto GetDeepPhotoById(int id, int userId)
         {
             DeepPhoto deepPhoto = new DeepPhoto();
             try
@@ -185,8 +185,9 @@ namespace SampleApi.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("select * from photos where Id = @id select * from comments where photoId = @id select count(*) as 'Total Likes' from likes where likes.photoId = @id select username from users join photos on photos.userId = users.id where photos.id = @id", conn);
+                    SqlCommand cmd = new SqlCommand("select *, isLikedByUser = CASE WHEN EXISTS(SELECT * FROM likes WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END, isFavoritedByUser = CASE WHEN EXISTS(SELECT * FROM favorites WHERE photoId = photos.id and userId = @userId) THEN 1 ELSE 0 END from photos where Id = @id select * from comments left join users on comments.commenterId = users.id where photoId = @id select count(*) as 'Total Likes' from likes where likes.photoId = @id select username from users join photos on photos.userId = users.id where photos.id = @id", conn);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.Read())  // THere will be zero or one
@@ -198,6 +199,8 @@ namespace SampleApi.DAL
                         deepPhoto.ImageUrl = (Convert.ToString(reader["imageUrl"]));
                         deepPhoto.DateAdded = (Convert.ToDateTime(reader["dateAdded"]));
                         deepPhoto.IsVisible = (Convert.ToBoolean(reader["isVisible"]));
+                        deepPhoto.IsFavoritedByUser = (Convert.ToBoolean(reader["isFavoritedByUser"]));
+                        deepPhoto.IsLikedByUser = (Convert.ToBoolean(reader["isLikedByUser"]));
                     }
                     else
                     {
@@ -220,6 +223,7 @@ namespace SampleApi.DAL
                                 comment.PhotoId = (Convert.ToInt32(reader["photoId"]));
                                 comment.CommenterId = Convert.ToInt32(reader["commenterId"]);
                                 comment.DateCommented = Convert.ToDateTime(reader["dateCommented"]);
+                                comment.CommenterName = Convert.ToString(reader["username"]);
                             };
                             deepPhoto.AllComments.Add(comment);
                         }

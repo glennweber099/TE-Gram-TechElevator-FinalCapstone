@@ -23,30 +23,42 @@
     </div>
     <div class="container">
         <div class="item">
-          <img v-bind:src="this.photo.ImageUrl" id="photo-url"/>
-          <p v-if="this.photo.IsLikedByUser == true">
-            <span class="heart-logo" v-on:click="toggleLike(this.photo.id)">❤</span>
+          <img v-bind:src="photo.ImageUrl" id="photo-url"/>
+          <p v-if="photo.IsLikedByUser == true">
+            <span class="heart-logo" v-on:click="toggleLike(photo.id)">❤</span>
           </p>
           <p v-else>
-            <span class="heart-logo" v-on:click="toggleLike(this.photo.id)">♡</span>
+            <span class="heart-logo" v-on:click="toggleLike(photo.id)">♡</span>
           </p>
-          <p id="likes" v-if="this.photo.totalLikes > 1">
-            <span>{{this.photo.totalLikes}} likes</span>
+          <p id="likes" v-if="photo.totalLikes > 1">
+            <span>{{photo.totalLikes}} likes</span>
           </p>
           <p id="likes" v-if="photo.totalLikes == 1">
-            <span>{{this.photo.totalLikes}} like</span>
+            <span>{{photo.totalLikes}} like</span>
           </p>
-          <p v-if="this.photo.isFavoritedByUser == true">
-            <span class="heart-logo" v-on:click="toggleFavorite(this.photo.id)">⚜</span>
+          <p v-if="photo.isFavoritedByUser == true">
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">⚜</span>
           </p>
           <p v-else>
-            <span class="heart-logo" v-on:click="toggleFavorite(this.photo.id)">✖</span>
+            <span class="heart-logo" v-on:click="toggleFavorite(photo.id)">✖</span>
           </p>
           <p>
-            <span id="photo-owner">{{this.photo.photoOwner}}</span>
-            <span id="photo-caption"> {{this.photo.caption}}</span>
+            <span id="photo-owner">{{photo.photoOwner}}</span>
+            <span id="photo-caption"> {{photo.caption}}</span>
+          </p>
+          <div v-for="comment in photo.comments" v-bind:key="comment.id">
+          <p>
+            <span id="photo-owner">{{comment.commenterName}}</span>
+            <span id="photo-caption"> {{comment.commentString}}</span>
           </p>
         </div>
+      </div>
+        <form v-on:submit.prevent="submit">
+          <div class="container"> 
+            <input type="text" placeholder="Enter Comment" v-model="comment.commentString">
+          </div>
+        <button type="submit">Post Comment</button>
+      </form>
       </div>
     <!-- DONE (just wanted to keep this comment here) This link (^) goes back to the log in screen
     it does not log out the user but when they type in new credidentals it replaces the token 
@@ -74,15 +86,21 @@ export default {
         IsLikedByUser: Boolean,
         isFavoritedByUser: Boolean,
         photoOwner: Number,
-        caption: String
+        caption: String,
+        comments: [
+          {
+            commentString: String,
+            dateCommented: Date,
+            commenterId: Number,
+            id: Number,
+            photoId: Number,
+            commenterName: String,
+          }
+        ],
       },
-      comments: [],
       comment: {
-        commentString: String,
-        dateCommented: Date,
-        commenterId: Number, 
-
-      },
+        commentString: '',
+      }
     };
   },
   methods: {
@@ -109,12 +127,10 @@ export default {
           }
         })
         .then(text => {
-          this.photos.forEach(photo => {
-            if (photo.id === photoId) {
-              photo.totalLikes = text.totalLikes;
-              photo.IsLikedByUser = text.liked;
-            }
-          });
+            if (this.photo.id === photoId) {
+              this.photo.totalLikes = text.totalLikes;
+              this.photo.IsLikedByUser = text.liked;
+         };
         })
         .then(err => console.error(err));
     },
@@ -129,7 +145,7 @@ export default {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.getToken()
         },
-        body: json_beautifier(favorite, { dropQuotesOnKeys: true, dropQuotesOnNumbers: true, inlineShortArrays: true})
+        body: JSON.stringify(favorite)
       })
         .then(response => {
           if (response.ok) {
@@ -137,19 +153,36 @@ export default {
           }
         })
         .then(text => {
-          this.photos.forEach(photo => {
-            if (photo.id === photoId) {
-              photo.isFavoritedByUser = text.favorited;
-            }
-          });
+            if (this.photo.id === photoId) {
+              this.photo.isFavoritedByUser = text.favorited;
+            };
+          })
+        .then(err => console.error(err));
+      },
+      submit() {    
+      let commentTemp = {
+      commentString: this.comment.commentString,
+      };
+      fetch(`${process.env.VUE_APP_REMOTE_API}/photo/comment/${this.$route.params.photoId}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.getToken()
+        },
+        body: JSON.stringify(commentTemp)
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
         })
         .then(err => console.error(err));
-      }
+      },
   },
   created() {
-    let photoId = this.$route.params.photoId;
     //Need /photo in this fetch statement to make it work, not sure why though but it took me forever for it to finally work
-    fetch(`${process.env.VUE_APP_REMOTE_API}/photo/detail/${photoId}`, {
+    fetch(`${process.env.VUE_APP_REMOTE_API}/photo/detail/${this.$route.params.photoId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -174,7 +207,7 @@ export default {
         this.photo.isFavoritedByUser = text.isFavoritedByUser;
         this.photo.photoOwner = text.photoOwner;
         this.photo.caption = text.caption;
-        this.comments = text.allComments;
+        this.photo.comments = text.allComments;
 
       });
   }
