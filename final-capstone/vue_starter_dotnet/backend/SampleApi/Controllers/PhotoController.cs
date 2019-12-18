@@ -79,17 +79,22 @@ namespace SampleApi.Controllers
         /// </summary>
         /// <param name="photo"></param>
         /// <returns></returns>
-        [HttpPut("delete")]
+        [HttpPut("delete-photo")]
         public IActionResult Delete(Photo photo)
         {
-            // Verifies username to confirm person deleting photo is the photo owner
-            User user = userDAO.GetUser(User.Identity.Name);
-            if(photo.UserId != user.Id)
+            //Verifies username to confirm person deleting photo is the photo owner
+           User user = userDAO.GetUser(User.Identity.Name);
+            if (photo.UserId != user.Id)
             {
-                return Unauthorized();
+                return Unauthorized(new
+                {
+                    message = "You do not have permission to remove this photo."
+                });
             }
             photoDAO.DeletePhoto(photo);
-            return NoContent();
+            return Ok(new {
+                message = "Photo removed."
+            });
         }
 
         [HttpGet("detail/{id}")]
