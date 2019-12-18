@@ -97,7 +97,7 @@ namespace SampleApi.Controllers
             });
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public IActionResult GetPhotoById(int id)
         {
             DeepPhoto photo = photoDAO.GetDeepPhotoById(id);

@@ -72,7 +72,7 @@ const router = new Router({
       }
     },
     {
-      path: "/detail/photo/:photoId",
+      path: "/detail/:photoId",
       name: "detail",
       component: PhotoDetail,
       meta: {
