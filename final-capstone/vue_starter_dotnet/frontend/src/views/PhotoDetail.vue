@@ -23,7 +23,7 @@
     </div>
     <div class="container">
         <div class="item">
-          <img v-bind:src="this.photo.imageUrl" id="photo-url"/>
+          <img v-bind:src="this.photo.ImageUrl" id="photo-url"/>
           <p v-if="this.photo.IsLikedByUser == true">
             <span class="heart-logo" v-on:click="toggleLike(this.photo.id)">❤</span>
           </p>
@@ -75,6 +75,13 @@ export default {
         isFavoritedByUser: Boolean,
         photoOwner: Number,
         caption: String
+      },
+      comments: [],
+      comment: {
+        commentString: String,
+        dateCommented: Date,
+        commenterId: Number, 
+
       },
     };
   },
@@ -167,6 +174,7 @@ export default {
         this.photo.isFavoritedByUser = text.isFavoritedByUser;
         this.photo.photoOwner = text.photoOwner;
         this.photo.caption = text.caption;
+        this.comments = text.allComments;
 
       });
   }
