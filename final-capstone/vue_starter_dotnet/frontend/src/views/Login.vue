@@ -1,6 +1,7 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
+      <div class="logo"><img src="./../../logo.png"></div>
       <h1 class="h3 mb-3 font-weight-normal" id="login-header">Welcome to TE-Gram</h1>
       <div
         id="invalid-credentials"
@@ -114,6 +115,12 @@ export default {
   font-family: "Pacifico", cursive;
   font-size: 3em;
   text-align: center;
+  margin-top: 5px;
+}
+
+.logo > img {
+  width: 15%;
+  justify-content: center;
 }
 
 .create-new-account-link {
@@ -131,6 +138,15 @@ export default {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1em;
   font-weight: bold;
+  border-radius: 15px;
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  width: 100px;
+}
+
+.login-button:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 #success-registering {

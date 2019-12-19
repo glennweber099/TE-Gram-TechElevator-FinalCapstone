@@ -9,11 +9,11 @@
       </div>
         <div class="right-nav-box">
           <div class="right-nav-column">
-          <router-link :to="{ name: 'upload' }">
+          <!-- <router-link :to="{ name: 'upload' }">
             <button class="upload-photo">Upload Photo</button>
-          </router-link>
+          </router-link> -->
           <router-link :to="{ name: 'camera'}">
-            <button class="take-photo">Take Photo</button>
+            <button class="take-photo">Upload Photo</button>
           </router-link>
           <button v-on:click="logout" id="logout-button">Logout</button>
         </div>
@@ -187,7 +187,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color:rgba(235,164,73,1);    
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-bottom: 5px;
+}
+
+.upload-photo:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: black 2px 2px;
 }
 
 .take-photo {
@@ -195,7 +202,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color: rgba(235,164,73,1); 
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-bottom: 5px;
+}
+
+.take-photo:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 #logout-button {
@@ -203,7 +217,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color: rgba(235,164,73,1); 
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-bottom: 5px;
+}
+
+#logout-button:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 #go-back {
@@ -211,8 +232,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color: rgba(252,236,138,1);
-  margin-left: 10px; 
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-left: 12px; 
+}
+
+#go-back:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: black 2px 2px;
 }
 
 #photo-owner {
@@ -235,10 +262,9 @@ export default {
 }
 
 .item > img {
-  width: 350px;
-  height: 300px;
-  justify-content: center;
-
+  width:350px;
+  height:300px;
+  object-fit:cover;
 }
 </style> 
 

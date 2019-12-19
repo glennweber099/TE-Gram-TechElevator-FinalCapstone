@@ -1,4 +1,24 @@
 <template>
+  <div class="home">
+    <div class="home-nav-container">
+      <div class="home-logo-box">
+        <img id="tegram-logo" src="./../../logo.png" />
+      </div>
+      <div class="center-box">
+        <div id="home-header">TE Gram</div>
+      </div>
+      <div class="right-nav-box">
+        <div class="right-nav-column">
+          <router-link :to="{ name: 'camera'}">
+            <button class="take-photo">Take Photo</button>
+          </router-link>
+          <router-link :to="{ name: 'favorites' }">
+            <button class="view-favorites">View Favorites</button>
+          </router-link>
+          <button v-on:click="logout" id="logout-button">Logout</button>
+        </div>
+      </div>
+    </div>
   <div id="new-post" class="container">
     <h2 id="upload-header">Upload a photo to share</h2>
     <form id="post-form" v-on:submit.prevent="sharePhoto">
@@ -22,6 +42,7 @@
       </div>
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -102,8 +123,86 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Pacifico|Solway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow|Girassol|Londrina+Outline|Pacifico|Solway&display=swap');
+.home-nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: solid rgba(255, 255, 255, 0.7);
+  border-top: solid rgba(255, 255, 255, 0.7);
+}
 
+.home-logo-box {
+  display: flex;
+  justify-content: flex-start;
+  width: 33%;
+}
+
+.center-box {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  width: 33%;
+}
+
+.right-nav-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-self: center;
+  margin-right: 0;
+  width: 33%;
+}
+
+.right-nav-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#home-header {  
+  font-family: "Pacifico", cursive;
+  font-size: 4em;
+  align-content: center;
+}
+
+#tegram-logo {
+  align-self: center;
+  width: 150px;
+}
+
+.upload-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.take-photo {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+.view-favorites {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
+
+#logout-button {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
+}
 #upload-header {
   font-family: 'Pacifico', cursive; 
   font-size: 3em;
@@ -115,6 +214,8 @@ export default {
   font-size: 1.2em;
   margin-top: 10px;
   width: 100px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #go-back {
@@ -122,6 +223,8 @@ export default {
   font-size: 1.2em;
   margin-top: 10px;
   width: 100px;
+  border-radius: 15px;
+  background-color:rgba(235,164,73,1); 
 }
 
 #post-form {

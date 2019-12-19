@@ -1,6 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
+      <div class="logo"><img src="./../../logo.png"></div>
       <h1 class="h3 mb-3 font-weight-normal" id="register-header">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         There were problems registering this user.
@@ -131,7 +132,15 @@ export default {
   font-family: 'Pacifico', cursive; 
   font-size: 3em;
   text-align: center;
+  margin-top: 5px;
 }
+
+
+.logo > img {
+  width: 15%;
+  justify-content: center;
+}
+
 .sr-only {
   font-family: 'Girassol', cursive; 
   font-size: 1.5em; 
@@ -148,8 +157,17 @@ tr td:first-child {
 
 #create-account-button {
   font-family: 'Archivo Narrow', sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
   font-weight: bold;
+  border-radius: 15px;
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  width: 150px;
+}
+
+#create-account-button:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 .login-link {
