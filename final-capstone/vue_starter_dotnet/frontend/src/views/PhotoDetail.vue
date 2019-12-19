@@ -59,7 +59,7 @@
             <input class="comment-box" style="text-align: center;" type="text" placeholder="Enter Comment" v-model="comment.commentString">
           </div>
           <div class="comment-submit">
-          <button type="submit">Post Comment</button>
+          <button type="submit" class="view-favorites">Post Comment</button>
           </div>
         </form>
       </div>
