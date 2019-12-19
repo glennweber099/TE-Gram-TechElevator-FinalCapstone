@@ -82,6 +82,10 @@ export default {
       );
           myWidget.open();
     },
+    logout: function(token) {
+      auth.destroyToken(token);
+      this.$router.push("/login");
+    },
     sharePhoto() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/photo/upload`, {
         method: "POST",
