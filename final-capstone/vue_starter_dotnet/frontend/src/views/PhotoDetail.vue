@@ -9,11 +9,8 @@
       </div>
       <div class="right-nav-box">
         <div class="right-nav-column">
-          <router-link :to="{ name: 'upload' }">
-            <button class="upload-photo">Upload Photo</button>
-          </router-link>
           <router-link :to="{ name: 'camera'}">
-            <button class="take-photo">Take Photo</button>
+            <button class="upload-photo">Upload Photo</button>
           </router-link>
           <router-link :to="{ name: 'favorites' }">
             <button class="view-favorites">View Favorites</button>
@@ -279,7 +276,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color:rgba(235,164,73,1);    
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-bottom: 3px;
+}
+
+.upload-photo:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 #logout-button {
@@ -287,9 +291,28 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color:rgba(235,164,73,1);    
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
 }
 
+#logout-button:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
+}
+
+#go-back {
+  font-family: "Archivo Narrow", sans-serif;
+  font-size: 1.2em;
+  width: 125px;
+  border-radius: 15px;
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+}
+
+#go-back:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
+}
 .take-photo {
   font-family: "Archivo Narrow", sans-serif;
   font-size: 1.2em;
@@ -303,16 +326,14 @@ export default {
   font-size: 1.2em;
   width: 125px;
   border-radius: 15px;
-  background-color:rgba(235,164,73,1); 
+  background-color: rgba(255,80,80,.7);
+  box-shadow: gray 2px 2px;
+  margin-bottom: 3px;
 }
 
-#go-back {
-  font-family: "Archivo Narrow", sans-serif;
-  font-size: 1.2em;
-  width: 125px;
-  border-radius: 15px;
-  background-color: rgba(252,236,138,1);
-  margin-left: 10px;  
+.view-favorites:hover {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(255,230,67,1) 0%, rgba(255,80,80,1) 100.2% );
+  box-shadow: white 2px 2px;
 }
 
 #photo-owner {

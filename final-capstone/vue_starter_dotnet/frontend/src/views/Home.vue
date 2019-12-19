@@ -13,7 +13,7 @@
             <button class="upload-photo">Upload Photo</button>
           </router-link> -->
           <router-link :to="{ name: 'camera'}">
-            <button class="take-photo">Upload Photo</button>
+            <button class="upload-photo">Upload Photo</button>
           </router-link>
           <router-link :to="{ name: 'favorites' }">
             <button class="view-favorites">View Favorites</button>
